@@ -1,17 +1,75 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
-/* Inicio Juan */
+
 *{
     font-family: Roboto;
     box-sizing: border-box;
 }
 
-body{
+/* Inicio Roseno */
+.top{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 69px;
+    background-color: #EC362D;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+.title{
+    font-size: 37px;
+    font-weight: 700;
+    font-style: bold;
+    color: #FFFFFF;
 }
 
+.your-quizzes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 1051px;
+    height: 181px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 71px;
+    border-radius: 5px;
+    border: 1px dashed #D4D4D4;
+    text-align: center;
+}
+.your-quizzes-empty{
+    width: 20%;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    margin: 0 auto;
+    color: #B9B9B9;
+}
+.button-create-your-quiz{
+    width: 150px;
+    height: 40;
+    margin-top: 35px;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 400;
+    border-radius: 50px;
+    background-color: #FAFAFA;
+    color: #EC362D;
+    border: 1px dashed #EC362D;
+    cursor: pointer;
+}
+/* body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #FAFAFA;
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
+/* Fim roseno */
+
+/* Inicio Juan */
 .container{
     width: 1051px;
     height: auto;
+    margin:0 auto;
 }
 
 .todos-os-quizzes{
@@ -23,7 +81,7 @@ body{
 .section{
     font-weight: 700;
     font-size: 20px;
-    margin-left: 6px;
+    margin-left: 0px;
     padding-bottom: 12px;
     text-shadow: 0px 4px 4px  rgba(0, 0, 0, 0.25);
 }
@@ -67,5 +125,6 @@ body{
     background-image: linear-gradient( to bottom, #ffffff00 0%, #ffffff00 40%, #000000 98%);
     z-index: 3;
 }
-
 /* Fim Juan */
+
+
