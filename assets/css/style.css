@@ -19,8 +19,21 @@
     color: #FFFFFF;
 }
 
+.your-quizzes{
+    width: 1051px;
+    height: 181px;
+    margin: 0 auto;
+    margin-top: 50px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    border: 1px dashed #D4D4D4;
+    text-align: center;
+}
 body{
     font-family: 'Roboto', sans-serif;
+    background-color: #FAFAFA;
 }
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 /* Fim roseno */
