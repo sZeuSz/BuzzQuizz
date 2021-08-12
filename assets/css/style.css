@@ -1,19 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900 &display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 
-* {
+*{
     font-family: Roboto;
     box-sizing: border-box;
 }
 
 /* Inicio Roseno */
-.top {
-    display: flex;
+.top{
+    display:flex;
     justify-content: center;
     align-items: center;
     height: 69px;
     background-color: #EC362D;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 h1 {
@@ -23,19 +23,21 @@ h1 {
     color: #FFFFFF;
 }
 
-.your-quizzes {
+.your-quizzes{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 1051px;
     height: 181px;
-    margin: 50px auto 71px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 71px;
     border-radius: 5px;
     border: 1px dashed #D4D4D4;
     text-align: center;
 }
-.your-quizzes-empty {
+.your-quizzes-empty{
     width: 20%;
     font-size: 20px;
     font-style: normal;
@@ -43,7 +45,7 @@ h1 {
     margin: 0 auto;
     color: #B9B9B9;
 }
-.button-create-your-quiz {
+.button-create-your-quiz{
     width: 150px;
     height: 40;
     margin-top: 35px;
@@ -64,20 +66,20 @@ h1 {
 /* Fim roseno */
 
 /* Inicio Juan */
-.container {
+.container{
     width: 1051px;
     height: auto;
-    margin: 0 auto;
+    margin:0 auto;
 }
 
-.section {
+.section{
     font-weight: 700;
     font-size: 20px;
     margin-bottom: 12px;
-    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0px 4px 4px  rgba(0, 0, 0, 0.25);
 }
 
-.todos-os-quizzes {
+.todos-os-quizzes{
     min-width: 1051px;
     min-height: 385px;
     display: flex;
@@ -85,7 +87,7 @@ h1 {
     justify-content: space-between;
 }
 
-.box {
+.box{
     height: 181px;
     width: 340px;
     border-radius: 5px;
@@ -94,13 +96,13 @@ h1 {
     background-color: aquamarine;
 }
 
-.box p {
+.box p{
     width: 301px;
     height: 54px;
     font-size: 19px;
     font-weight: 400;
     line-height: 22px;
-    letter-spacing: 0;
+    letter-spacing: 0em;
     text-align: left;
     position: absolute;
     bottom: 7px;
@@ -109,19 +111,19 @@ h1 {
     z-index: 4;
 }
 
-.box img {
+.box img{
     position: relative;
     width: 340px;
     height: 181px;
     border-radius: 5px;
 }
 
-.background-linear {
+.background-linear{
     position: absolute;
     height: 181px;
     width: 340px;
     border-radius: 5px;
-    background-image: linear-gradient(to bottom, #ffffff00 0%, #ffffff00 40%, #000000 98%);
+    background-image: linear-gradient( to bottom, #ffffff00 0%, #ffffff00 40%, #000000 98%);
     z-index: 3;
 }
 
