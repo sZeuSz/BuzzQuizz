@@ -214,27 +214,90 @@ body{
 .esconder{
     display: none;
 }
-/*Inicio do Juan */
-@media (max-width: 1100px){
-*{
-    min-width: auto;
-    min-height: auto;
-}
- 
-header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    width: 100vw;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    height: 69px;
-    background-color: #EC362D;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+/*INICIO Juan TELA11*/
+body{
+    font-family: Roboto;
+    background-color: #fafafa;
 }
 
+.titulo-desktop11{
+    margin-top: 132px;
+    margin-bottom: 46px;
+    font-size: 23px;
+    font-weight: 700;
+    color: black;
+    text-align: center;
+}
+
+.tela11{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box11{
+    width: 500px;
+    height: 266px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.box11 p{
+    width: 454px;
+    height: 54px;
+    font-size: 19px;
+    font-weight: 400;
+    text-align: left;
+    position: absolute;
+    bottom: 5px;
+    left: 18px;
+    -webkit-text-stroke-width: 0.3px;
+    -webkit-text-stroke-color: #000;
+    color: white;
+    z-index: 3;
+}
+
+.box11 img{
+    position: relative;
+    width: 500px;
+    height: 266px;
+    border-radius: 5px;
+}
+
+.background-linear11{
+    position: absolute;
+    width: 500px;
+    height: 266px;
+    border-radius: 5px;
+    background-image: linear-gradient( to bottom, #ffffff00 0%, #ffffff00 40%, #000000 98%);
+    z-index: 2;
+}
+
+.button11{
+    height: 44px;
+    width: 220px;
+    border-radius: 15px;
+    background-color: #EC362D;
+    font-size: 21px;
+    font-weight: 400;
+    text-align: center;
+    color: #FFF5F4;
+    border: none;
+    margin-top: 45px;
+}
+
+.voltar-home11{
+    height: 44px;
+    width: 219px;
+    color:#818181;
+    margin-top: 18px;
+    text-align: center;
+}
+/*FIM JUAN TELA11*/
+
+/*INICIO @media1100 JUAN*/
+@media (max-width: 1100px){
 h1{
     font-family: Roboto;
     font-size: 37px;
@@ -243,41 +306,15 @@ h1{
 }
 
 .your-quizzes{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     width: 90vw;
     max-height: 181px;
-    margin: 0 auto;
     margin-top: 110px;
     margin-bottom: 35px;
-    border-radius: 5px;
-    border: 1px dashed #D4D4D4;
-    text-align: center;
-    
 }
+
 .your-quizzes-empty{
     width: 250px;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    margin: 0 auto;
-    color: #B9B9B9;
     word-break: break-word;
-}
-.button-create-your-quiz{
-    width: 150px;
-    height: 40px;
-    margin-top: 30px;
-    font-size: 21px;
-    font-style: normal;
-    font-weight: 400;
-    border-radius: 50px;
-    background-color: #FAFAFA;
-    color: #EC362D;
-    border: 1px dashed #EC362D;
-    cursor: pointer;
 }
 
 .container{
@@ -303,49 +340,74 @@ h1{
     align-items: center;
 }
 
-.box{
-    height: 181px;
-    width: 340px;
-    border-radius: 5px;
-    position: relative;
+.box{    
     margin-top: 12px;
     margin-right: 15px;
-    background-color: aquamarine;
-}
-
-.box p{
-    width: 301px;
-    height: 54px;
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 22px;
-    letter-spacing: 0em;
-    text-align: left;
-    position: absolute;
-    bottom: 5px;
-    left: 18px;
-    -webkit-text-stroke-width: 0.3px;
-    -webkit-text-stroke-color: #000;
-    color: white;
-    z-index: 3;
 }
 
 .box img{
-    position: relative;
     width: 340px;
     height: 181px;
-    border-radius: 5px;
+}
 }
 
+/*FIM @media1100 JUAN*/
+
+/*INICIO @media375 JUAN*/
+@media (max-width: 375px){
+.box{
+    width: 90%;
+    height: 100%;
+}
+    
+.box p{
+    font-size: 100%;
+    width: 80%;    
+    height: auto;   
+}
+    
+.box img{
+    width: 100%;
+    height: 100%;
+}
+    
 .background-linear{
-    position: absolute;
-    height: 181px;
-    width: 340px;
-    border-radius: 5px;
-    background-image: linear-gradient( to bottom, #ffffff00 0%, #ffffff00 40%, #000000 98%);
-    z-index: 2;
-}
+    width: 100%;
+    height: 100%;
 }
 
+.your-quizzes-empty{
+    width: 80%;
+}
+} 
+/*FIM @media375 JUAN*/
+
+/*INICIO @media500 JUAN*/
+ @media (max-width: 500px){
+.box11{
+    width: 90%;
+    height: 100%;
+}
+    
+.box11 p{
+    font-size: 95%;
+    width: 80%;       
+}
+    
+.box11 img{
+    width: 100%;
+    height: 100%;
+}
+    
+.background-linear11{
+    width: 100%;
+    height: 100%;
+}
+
+.button11{
+    width: 50%;
+    font-size: 100%;
+}
+} 
+/*FIM @media500 JUAN*/
 /*Fim Juan*/
-
