@@ -129,6 +129,9 @@ h1{
     z-index: 2;
 }
 
+.esconder{
+    display: none;
+}
 /*Inicio do Juan */
 @media (max-width: 1100px){
 *{
