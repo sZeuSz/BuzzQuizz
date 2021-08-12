@@ -1,6 +1,10 @@
-/* Inicio Juan */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
-/* Fim Juan */
+
+*{
+    font-family: Roboto;
+    box-sizing: border-box;
+}
 
 /* Inicio Roseno */
 .top{
@@ -10,12 +14,12 @@
     height: 69px;
     background-color: #EC362D;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
 }
-.title{
+
+h1 {
+    font-family: Roboto;
     font-size: 37px;
     font-weight: 700;
-    font-style: bold;
     color: #FFFFFF;
 }
 
@@ -28,6 +32,7 @@
     height: 181px;
     margin: 0 auto;
     margin-top: 50px;
+    margin-bottom: 71px;
     border-radius: 5px;
     border: 1px dashed #D4D4D4;
     text-align: center;
@@ -53,10 +58,75 @@
     border: 1px dashed #EC362D;
     cursor: pointer;
 }
-body{
+/* body{
     font-family: 'Roboto', sans-serif;
     background-color: #FAFAFA;
 }
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
 /* Fim roseno */
+
+/* Inicio Juan */
+.container{
+    width: 1051px;
+    height: auto;
+    margin:0 auto;
+}
+
+.section{
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 12px;
+    text-shadow: 0px 4px 4px  rgba(0, 0, 0, 0.25);
+}
+
+.todos-os-quizzes{
+    min-width: 1051px;
+    min-height: 385px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.box{
+    height: 181px;
+    width: 340px;
+    border-radius: 5px;
+    position: relative;
+    /* margin: 0px 6px 12px 6px; */
+    background-color: aquamarine;
+}
+
+.box p{
+    width: 301px;
+    height: 54px;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    position: absolute;
+    bottom: 7px;
+    left: 18px;
+    color: white;
+    z-index: 4;
+}
+
+.box img{
+    position: relative;
+    width: 340px;
+    height: 181px;
+    border-radius: 5px;
+}
+
+.background-linear{
+    position: absolute;
+    height: 181px;
+    width: 340px;
+    border-radius: 5px;
+    background-image: linear-gradient( to bottom, #ffffff00 0%, #ffffff00 40%, #000000 98%);
+    z-index: 3;
+}
+
+/* Fim Juan */
+
 
