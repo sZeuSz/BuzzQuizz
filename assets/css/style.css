@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
 
 
 *{
@@ -65,6 +65,88 @@ h1{
     border: 1px dashed #EC362D;
     cursor: pointer;
 }
+/*Inicio tela 1 criar Quiz */
+.content{
+    margin-top: 117px;
+    width: 600px;
+    background-color: #FAFAFA;
+    margin: 117px auto 0 auto;
+}
+.forms{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 10px ;
+    background-color: #FFFFFF;
+}
+input{
+    height: 43px;
+    width: 564px;
+    font-size: 19px;
+    font-weight: 400;
+    font-style: italic;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.primeiro{
+    margin-top: 25px;
+}
+.ultimo{
+    margin-bottom: 25px;
+}
+input::placeholder,
+input:focus{
+    text-indent: 12px;
+}
+input::placeholder{
+    color: #BABABA;
+}
+
+.button{
+    height: 54px;
+    width: 65%;
+    border-radius: 15px;
+    background-color: #EC362D;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #FFF5F4;
+    border: none;
+    margin-top: 45px;
+    margin-left: 50%;
+    transform:translateX(-50%);
+    cursor: pointer;
+}
+
+.title-section{
+    font-size: 23px;
+    color:#000000;
+    margin: 0 0 18px 0;
+    text-align: center;
+}
+body{
+    background-color: #FAFAFA;
+}
+/* Fim tela 1 Criar Quiz */
+
+/* Inicio tela 2 Criar Quiz */
+
+.question{
+    font-size: 20px;
+    margin: 27px 0px 0px 20px;
+    color:#000000;
+}
+
+
+/* Fim tela 2 Criar Quiz */
+
+
+/* Fim roseno */
 
 /* Inicio Juan */
 .container{
