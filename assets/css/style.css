@@ -142,6 +142,30 @@ input::placeholder{
     transform:translateX(-50%);
     cursor: pointer;
 }
+.butaun{
+    height: 54px;
+    width: 65%;
+    border-radius: 15px;
+    background-color: #EC362D;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    color: #FFF5F4;
+    border: none;
+    margin-top: 45px;
+    margin-bottom: 45px;
+    cursor: pointer;
+}
+
+.alinhar{
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    /* background-color: blue; */
+    margin: 0 auto;
+}
+
 
 .title-section{
     font-size: 23px;
@@ -464,16 +488,22 @@ h1{
 /* Inciio @media750 Tela1 Roseno*/
 
 @media (max-width: 750px){
-    .butaun{
-        margin: 0 auto;
+    /* Tela 1 "comece pelo comeco */
+    .content{
+        width: 100%;
     }
     .alinhar{
-        display:flex;
-        justify-content: center;
-        background-color: blue;
-        margin: 0 auto;
+        width: 90%;
     }
-        
+    .butaun{
+        height: 54px;
+        width: 100%;
+    }
+    
+    input{
+        width: 95%;
+    }
+    /*Fim Tela 1 "comece pelo comeco" */
 }
 
 /* Fim @media750 Tela1 Roseno */
