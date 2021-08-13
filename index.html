@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <title>BuzzQuizz</title>
@@ -17,7 +17,7 @@
         <main>
             <section class="your-quizzes">
                 <span class="your-quizzes-empty">Você não criou nenhum quizz ainda :(</span>
-                <button class="button-create-your-quiz">Criar Quiz</button>
+                <button class="button-create-your-quiz" onclick="criarQuiz();">Criar Quiz</button>
             </section>
         </main>
             <!-- Fim roseno -->
@@ -64,50 +64,104 @@
         </main>
     </div>
     <!-- Tela 1 inicio Roseno-->
-    <main class="content esconder">
+    <main class="tela1 content esconder">
         <div class="secao">
             <h1 class="title-section">Comece pelo começo</h1>
         </div>
-        <div class="forms">
+        <div class="forms-inicial">
             <input class="primeiro" type="text" placeholder="Título do seu quizz">
             <input type="text" placeholder="URL da imagem do seu quizz">
             <input type="text" placeholder="Quantidade de perguntas do quizz">
             <input class="ultimo" type="text" placeholder="Quantidade de níveis do quizz">
         </div>
-        <button class="button">Prosseguir pra criar perguntas</button>
+        <div class="alinhar">
+        <button class="butaun" onclick="criarPerguntas();">Prosseguir pra criar perguntas</button>
+    </div>
     </main>
     <!-- Tela 1 fim Roseno -->
 
     <!-- Tela 2 inicio Roseno -->
-    <main class="content">
+    <main class="tela2 content esconder">
         <div class="secao">
             <h1 class="title-section">Crie suas perguntas</h1>
         </div>
         <div class="forms">
-            <h1 class="question">Pergunta 1</h1>
-            <input class="texto" type="text" placeholder="Texto da pergunta">
-            <input class="cor-fundo" type="text" placeholder="Cor de fundo da pergunta">
-            <h1 class="question">Resposta correta</h1>
-            <input class="" type="text" placeholder="Resposta correta">
-            <input class="ultimo" type="text" placeholder="URL da imagem">
-            <h1 class="question">Resposta correta</h1>
+            <div class="pergunta">
+                <h1 class="question">Pergunta 1</h1>
+                <input class="texto" type="text" placeholder="Texto da pergunta">
+                <input class="cor-fundo" type="text" placeholder="Cor de fundo da pergunta">
+
+                <h1 class="question">Resposta correta</h1>
+                <input class="" type="text" placeholder="Resposta correta">
+                <input class="ultimo" type="text" placeholder="URL da imagem">
+
+                <h1 class="question">Respostas incorretas</h1>
+                <input class="" type="text" placeholder="Resposta incorreta 1">
+                <input class="ultimo" type="text" placeholder="URL da imagem 1">
+                <input class="" type="text" placeholder="Resposta incorreta 2">
+                <input class="ultimo" type="text" placeholder="URL da imagem 2">
+                <input class="" type="text" placeholder="Resposta incorreta 3">
+                <input class="ultimo" type="text" placeholder="URL da imagem 3">
+            </div>
+            <div class="alinha"> 
+                <h1 class="exemplo">Pergunta 2</h1>
+                <img class="icone" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
+            </div>
+            <div class="alinha"> 
+                <h1 class="exemplo">Pergunta 3</h1>
+                <img class="icone" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
+            </div>
+
         </div>
-        <button class="button">Prosseguir pra criar perguntas</button>
+        <button class="button" onclick="criarNiveis();">Prosseguir pra criar níveis</button>
     </main>
     <!-- Tela 2 fim Roseno -->
 
-    <!-- Tela 3 inicio Juan -->
-  <div class="tela11 esconder">
-          <p class="titulo-desktop11">Seu quizz está pronto!</p>
-        <div class="box11">
-            <div class="background-linear11"></div>
-            <img src="https://media.discordapp.net/attachments/875121921111519272/875147837078380595/QuizSimp.png?width=720&height=405">
-            <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
+    <!-- Tela 3 inicio Roseno -->
+    <main class="tela3 content esconder">
+        <div class="secao">
+            <h1 class="title-section">Agora, decida os níveis</h1>
         </div>
-        <button type="button" class="button11">Acessar Quizz</button>
-        <p class="voltar-home11">Voltar pra home</p>
+        <div class="forms">
+            <div class="pergunta">
+                <h1 class="question">Nível 1</h1>
+                <input class="texto" type="text" placeholder="Título do nível">
+                <input class="cor-fundo" type="text" placeholder="% de acerto mínima">
+
+                <input class="" type="text" placeholder="URL da imagem do nível">
+                <input class="ultimo" type="text" placeholder="Descrição do nível">
+            </div>
+            <div class="alinha"> 
+                <h1 class="exemplo">Nível 2</h1>
+                <img class="icone" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
+            </div>
+            <div class="alinha"> 
+                <h1 class="exemplo">Nível 3</h1>
+                <img class="icone" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
+            </div>
+            <button class="button" onclick="finalizarQuiz();">Finalizar Quizz</button>
+        </div>
+    </main>
+    <!-- Tela 3 fim Roseno -->
+
+    <!-- Tela 4 inicio Juan -->
+    <div class="tela4 esconder">
+        <div class="tela11 esconder"> <!-- Display flex é prioridade não vai funcionar-->
+            <p class="titulo-desktop11">Seu quizz está pronto!</p>
+            <div class="box11">
+                <div class="background-linear11"></div>
+                <img src="https://media.discordapp.net/attachments/875121921111519272/875147837078380595/QuizSimp.png?width=720&height=405">
+                <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
+            </div>
+            <button type="button" class="button11">Acessar Quizz</button>
+            <p class="voltar-home11" onclick="voltarParaHome();">Voltar pra home</p>
+        </div>
     </div>
     
-    <!-- Tela 3 fim Juan -->
+    <!-- Tela 4 fim Juan -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="assets/js/script.js"></script>
 </body>
 </html>
