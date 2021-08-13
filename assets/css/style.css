@@ -242,6 +242,7 @@ body{
 }
 
 .box{
+    margin-top: 12px;
     height: 181px;
     width: 340px;
     border-radius: 5px;

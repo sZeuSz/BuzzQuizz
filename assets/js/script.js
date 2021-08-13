@@ -1,4 +1,33 @@
 //Inicio Juan
+const URL_QUIZZES = "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes"
+
+buscarQuizzes();
+
+function buscarQuizzes (){
+    const promise = axios.get(URL_QUIZZES);
+    promise.then(renderizarQuizzes)
+}
+
+function renderizarQuizzes(resposta){
+    console.log(resposta);
+
+    for (let i=0; i<resposta.data.length; i++){
+
+    let title = resposta.data[i].title;
+    let image = resposta.data[i].image;
+
+    console.log(resposta.data[i].title)
+    console.log(resposta.data[i].image)
+    
+    let divDosQuizzes = document.querySelector(".todos-os-quizzes");
+    divDosQuizzes.innerHTML+=   
+            `<div class="box">
+                <div class="background-linear"></div>
+                <img src="${image}">
+                <p>${title}</p>
+            </div>`
+    }    
+}
 
 //Fim Juan
 
