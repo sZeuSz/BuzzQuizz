@@ -1,6 +1,43 @@
 //Inicio Juan
+const URL_QUIZZES = "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes"
+
+buscarQuizzes();
+
+function buscarQuizzes (){
+    const promise = axios.get(URL_QUIZZES);
+    promise.then(renderizarQuizzes)
+}
+
+function renderizarQuizzes(resposta){
+    // console.log(resposta);
+
+    for (let i=0; i<resposta.data.length; i++){
+    let title = resposta.data[i].title;
+    let image = resposta.data[i].image;   
+    let divDosQuizzes = document.querySelector(".todos-os-quizzes");
+    divDosQuizzes.innerHTML+=   
+            `<div onclick="abrirQuizz(this)" class="box" id="${i}">
+                <div class="background-linear"></div>
+                <img src="${image}">
+                <p>${title}</p>
+            </div>`
+    }    
+}
+
+//funçao pra mostrar quizzes:
+// function abrirQuizz(element){
+//     console.log(element);
+
+//     const IDdoQuizz = element.id;
+//     const quizzIndividual = listaIdDosQuizzes[IDdoQuizz];
+//     const quizzImage = quizzIndividual.image;
+//     const quizzTitulo = quizzIndividual.title;
+
 
 //Fim Juan
+
+
+
 
 
 //Inicio Roseno

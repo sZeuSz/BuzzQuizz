@@ -242,11 +242,11 @@ body{
 }
 
 .box{
+    margin-top: 12px;
     height: 181px;
     width: 340px;
     border-radius: 5px;
     position: relative;
-    background-color: aquamarine;
 }
 
 .box p{
@@ -367,6 +367,96 @@ body{
     cursor: pointer;
 }
 /*FIM JUAN TELA11*/
+
+/*INICIO TELA QUIZZ ABERTO JUAN */
+
+body{
+    background-color: #FAFAFA;
+}
+
+.foto-de-capa-quizz img{
+    margin-top:69px;
+    width: 100vw;
+    height: 227px;
+    object-fit: cover;
+    position: relative;
+}
+
+.foto-de-capa-quizz p{
+    position: absolute;
+    width: 80vw;
+    text-align: center;
+    top: 159px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 39px;
+    color: white;
+}
+
+.caixa-com-pergunta-e-opcao{
+    position: relative;
+    margin-top: 42px; 
+    margin-left: auto;
+    margin-right: auto;
+    width: 759px;
+    height: 676px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.topo-pergunta{
+    margin-left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    top: 22px;
+    width: 688px;
+    height: 137px;
+    background: #434CA0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topo-pergunta p{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 23px;
+    line-height: 27px;
+    color: #FFFFFF;
+}
+
+.div-das-respostas{
+    margin-left: auto;
+    margin-right: auto;
+    /* margin-inline: auto; */
+    padding-top: 165px;
+    width: 688px;
+    height: 412px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.box-das-respostas img{
+    margin-top: 12px;
+    width: 329px;
+    height: 175px;
+}
+
+.box-das-respostas p{
+font-family: Roboto;
+font-weight: 700;
+font-size: 20px;
+margin-top: 7px;
+margin-bottom: 17px;
+}
+
+
+/*FIM TELA QUIZZ ABERTO JUAN */
+
 
 /*INICIO @media1100 JUAN*/
 @media (max-width: 1100px){
