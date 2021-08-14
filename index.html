@@ -69,10 +69,10 @@
             <h1 class="title-section">Comece pelo começo</h1>
         </div>
         <div class="forms-inicial">
-            <input class="primeiro" type="text" placeholder="Título do seu quizz">
-            <input type="text" placeholder="URL da imagem do seu quizz">
-            <input type="text" placeholder="Quantidade de perguntas do quizz">
-            <input class="ultimo" type="text" placeholder="Quantidade de níveis do quizz">
+            <input class="titulo primeiro" type="text" placeholder="Título do seu quizz">
+            <input class="url-imagem" type="text" placeholder="URL da imagem do seu quizz">
+            <input class="qtd-perguntas" type="text" placeholder="Quantidade de perguntas do quizz">
+            <input class="qtd-niveis ultimo" type="text" placeholder="Quantidade de níveis do quizz">
         </div>
         <div class="alinhar">
         <button class="butaun" onclick="criarPerguntas();">Prosseguir pra criar perguntas</button>
@@ -85,33 +85,24 @@
         <div class="secao">
             <h1 class="title-section">Crie suas perguntas</h1>
         </div>
-        <div class="forms">
-            <div class="pergunta">
+        <div class="perguntas forms">
+            <div class="pergunta pergunta-1">
                 <h1 class="question">Pergunta 1</h1>
                 <input class="texto" type="text" placeholder="Texto da pergunta">
-                <input class="cor-fundo" type="text" placeholder="Cor de fundo da pergunta">
+                <input class="cor-fundo" type="text" placeholder="Cor de fundo da pergunta (Hexadecimal)">
 
                 <h1 class="question">Resposta correta</h1>
-                <input class="" type="text" placeholder="Resposta correta">
-                <input class="ultimo" type="text" placeholder="URL da imagem">
+                <input class="resposta-correta" type="text" placeholder="Resposta correta">
+                <input class="ultimo resposta-correta-url-imagem" type="text" placeholder="URL da imagem">
 
                 <h1 class="question">Respostas incorretas</h1>
-                <input class="" type="text" placeholder="Resposta incorreta 1">
-                <input class="ultimo" type="text" placeholder="URL da imagem 1">
-                <input class="" type="text" placeholder="Resposta incorreta 2">
-                <input class="ultimo" type="text" placeholder="URL da imagem 2">
-                <input class="" type="text" placeholder="Resposta incorreta 3">
-                <input class="ultimo" type="text" placeholder="URL da imagem 3">
+                <input class="resposta-incorreta-1" type="text" placeholder="Resposta incorreta 1">
+                <input class="ultimo resposta-incorreta-url-1" type="text" placeholder="URL da imagem 1">
+                <input class="resposta-incorreta-2" type="text" placeholder="Resposta incorreta 2">
+                <input class="ultimo resposta-incorreta-url-2" type="text" placeholder="URL da imagem 2">
+                <input class="resposta-incorreta-3" type="text" placeholder="Resposta incorreta 3">
+                <input class="ultimo resposta-incorreta-url-3" type="text" placeholder="URL da imagem 3">
             </div>
-            <div class="alinha"> 
-                <h1 class="exemplo">Pergunta 2</h1>
-                <img class="icone" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
-            </div>
-            <div class="alinha"> 
-                <h1 class="exemplo">Pergunta 3</h1>
-                <img class="icone" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
-            </div>
-
         </div>
         <div class="alinhar">
             <button class="butaun" onclick="criarNiveis();">Prosseguir pra criar níveis</button>
@@ -120,12 +111,12 @@
     <!-- Tela 2 fim Roseno -->
 
     <!-- Tela 3 inicio Roseno -->
-    <main class="tela3 content esconder">
+    <main class="esconder tela3 content esconder">
         <div class="secao">
             <h1 class="title-section">Agora, decida os níveis</h1>
         </div>
         <div class="forms">
-            <div class="pergunta">
+            <div class="nivel pergunta">
                 <h1 class="question">Nível 1</h1>
                 <input class="texto" type="text" placeholder="Título do nível">
                 <input class="cor-fundo" type="text" placeholder="% de acerto mínima">
