@@ -5,18 +5,19 @@ buscarQuizzes();
 
 function buscarQuizzes (){
     const promise = axios.get(URL_QUIZZES);
-    promise.then(renderizarQuizzes)
+    promise.then(renderizarQuizzes);
 }
 
 function renderizarQuizzes(resposta){
-    // console.log(resposta);
+    console.log(resposta);
 
     for (let i=0; i<resposta.data.length; i++){
     let title = resposta.data[i].title;
-    let image = resposta.data[i].image;   
+    let image = resposta.data[i].image;
+    let id = resposta.data[i].id   
     let divDosQuizzes = document.querySelector(".todos-os-quizzes");
     divDosQuizzes.innerHTML+=   
-            `<div onclick="abrirQuizz(this)" class="box" id="${i}">
+            `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
                 <div class="background-linear"></div>
                 <img src="${image}">
                 <p>${title}</p>
@@ -24,14 +25,80 @@ function renderizarQuizzes(resposta){
     }    
 }
 
-//funçao pra mostrar quizzes:
-// function abrirQuizz(element){
-//     console.log(element);
+function esconderTela(){
+    document.querySelector(".home").classList.add("esconder");
 
-//     const IDdoQuizz = element.id;
-//     const quizzIndividual = listaIdDosQuizzes[IDdoQuizz];
-//     const quizzImage = quizzIndividual.image;
-//     const quizzTitulo = quizzIndividual.title;
+    document.querySelector(".pagina-de-um-quizz").classList.remove("esconder");
+}
+
+
+
+//funçao pra mostrar quizzes:
+function urlDosIDs(elemento){
+    const promise = axios.get(URL_QUIZZES + "/" + elemento.id);
+    promise.then(abrirQuizz);
+}
+
+
+let arrayDasRespostas = [];
+
+function abrirQuizz(respostaIndividual){
+    console.log(respostaIndividual)
+    
+    const quizzIndividual = respostaIndividual.data;
+    const quizId = quizzIndividual.id;
+    const quizzImage = quizzIndividual.image;
+    const quizzTitle = quizzIndividual.title;
+    //ja peguei ID, IMAGEM E TITLE
+    document.querySelector(".pagina-de-um-quizz").innerHTML =    `<div                                    
+                                                                class="foto-de-capa-quizz">
+                                                                <img src="${quizzImage}"><p>${quizzTitle}</p>
+                                                                </div>`
+    //AGORA VOU PEGAR AS INFOS DE DENTRO DO "QUESTIONS"
+    let arrayQuestions = quizzIndividual.questions;
+    
+    for (let i=0; i<arrayQuestions.length; i++){
+        let questionTitle = arrayQuestions[i].title;
+        let questionColor = arrayQuestions[i].color;
+        //PEGUEI TITLE E COLOR QUE TAO DENTRO DA QUESTION (TITULO E COR DE FUNDO DA PERGUNTA)
+        //FALTA COLOCAR O TITULO E COR DE FUNDO DA PERGUNTA NA DIV COM INNER.HTML
+        let lugarDaPergunta = document.querySelector(".pagina-de-um-quizz");
+        lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
+                                        <div class="topo-pergunta" style="background-color: ${questionColor}" >
+                                        <p>${questionTitle}</p>
+                                        </div>
+                                        <div class="div-das-respostas div-das-respostas-${i}"></div>
+                                      </div>`
+            
+            arrayQuestions[i].answers.sort(comparador);
+
+            for (let index=0; index<arrayQuestions[i].answers.length; index++){
+                let resposta = arrayQuestions[i].answers[index].text;
+                let imagem = arrayQuestions[i].answers[index].image;
+                let ehRespostaCorreta = arrayQuestions[i].answers[index].isCorrectAnswer;
+ 
+                let lugarDasRespostas = document.querySelector(`.div-das-respostas-${i}`); 
+                 
+                 lugarDasRespostas.innerHTML += 
+                                                `<div class="box-das-respostas box-das-respostas-${i}${index}" id="${i}${index}"><img src="${imagem}"><p>${resposta}</p></div>`
+
+                let boxDaResposta = document.querySelector(`.box-das-respostas-${i}${index}`);
+                if(ehRespostaCorreta === true){
+                    boxDaResposta.classList.add("acertou");
+                    
+                }else{
+                    boxDaResposta.classList.add("errou");
+                }
+
+            }
+
+    }
+}
+       
+    function comparador() { 
+        return Math.random() - 0.5; 
+    };
+
 
 
 //Fim Juan
