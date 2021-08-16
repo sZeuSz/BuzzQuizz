@@ -533,6 +533,17 @@ margin-top: 7px;
 margin-bottom: 17px;
 }
 
+.resposta-correta{
+    color: #009C22;
+    pointer-events: none;
+}
+
+.resposta-errada{
+    color: red;
+    filter: opacity(50%);
+    pointer-events: none;
+}
+
 
 /*FIM TELA QUIZZ ABERTO JUAN */
 

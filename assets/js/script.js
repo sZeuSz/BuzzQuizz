@@ -10,7 +10,6 @@ function buscarQuizzes (){
 }
 
 function renderizarQuizzes(resposta){
-    console.log(resposta);
 
     for (let i=0; i<resposta.data.length; i++){
     let title = resposta.data[i].title;
@@ -44,25 +43,30 @@ function urlDosIDs(elemento){
 let arrayDasRespostas = [];
 
 function abrirQuizz(respostaIndividual){
-    console.log(respostaIndividual)
     
     const quizzIndividual = respostaIndividual.data;
     const quizId = quizzIndividual.id;
     const quizzImage = quizzIndividual.image;
     const quizzTitle = quizzIndividual.title;
-    //ja peguei ID, IMAGEM E TITLE
-    document.querySelector(".pagina-de-um-quizz").innerHTML =    `<div                                    
+    let arrayQuestions = quizzIndividual.questions;
+    console.log(quizzIndividual.levels)
+    let arrayLevels = quizzIndividual.levels;
+    const imageLevel = arrayLevels.image;       
+    const minValueLevel = arrayLevels.minValue;
+    const textLevel = arrayLevels.text;  
+    const titleLevel = arrayLevels.title;
+    
+    document.querySelector(".pagina-de-um-quizz").innerHTML =   `<div                                    
                                                                 class="foto-de-capa-quizz">
                                                                 <img src="${quizzImage}"><p>${quizzTitle}</p>
                                                                 </div>`
-    //AGORA VOU PEGAR AS INFOS DE DENTRO DO "QUESTIONS"
-    let arrayQuestions = quizzIndividual.questions;
     
+    
+
     for (let i=0; i<arrayQuestions.length; i++){
         let questionTitle = arrayQuestions[i].title;
         let questionColor = arrayQuestions[i].color;
-        //PEGUEI TITLE E COLOR QUE TAO DENTRO DA QUESTION (TITULO E COR DE FUNDO DA PERGUNTA)
-        //FALTA COLOCAR O TITULO E COR DE FUNDO DA PERGUNTA NA DIV COM INNER.HTML
+        
         let lugarDaPergunta = document.querySelector(".pagina-de-um-quizz");
         lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
                                         <div class="topo-pergunta" style="background-color: ${questionColor}" >
@@ -70,7 +74,29 @@ function abrirQuizz(respostaIndividual){
                                         </div>
                                         <div class="div-das-respostas div-das-respostas-${i}"></div>
                                       </div>`
-            
+    //CRIAÇAO DO LEVEL
+        // if(arrayQuestions.length-1 === i){
+        //     for(i=0; i<arrayLevels.length;i++){
+        //         if (resultadoFinal === 0){
+
+        //         }
+
+        //         if(resultadoFinal >= arrayLevels[i].minValue  && resultadoFinal <= arrayLevels[i+1].minValue){
+        //             // **se ele entrar aqui eu boto pra criar a div dos levels** 
+        //             //**  **
+
+        //              console.log (resultadoFinal + '% de acerto')
+        //         }
+
+
+        //     lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
+        //                                   <div class="topo-pergunta" style="background-color: #EC362D">
+        //                                   <p>${titleLevel}</p>
+        //                                   </div>
+        //                                   </div>`
+        //     }
+        // }
+    //FIM DA CRIAÇÃO DO LEVEL
             arrayQuestions[i].answers.sort(comparador);
 
             for (let index=0; index<arrayQuestions[i].answers.length; index++){
@@ -81,27 +107,73 @@ function abrirQuizz(respostaIndividual){
                 let lugarDasRespostas = document.querySelector(`.div-das-respostas-${i}`); 
                  
                  lugarDasRespostas.innerHTML += 
-                                                `<div class="box-das-respostas box-das-respostas-${i}${index}" id="${i}${index}"><img src="${imagem}"><p>${resposta}</p></div>`
+                                                `<div class="box-das-respostas box-das-respostas-${i}${index}" onclick="tentarAcertar(this)"id="${i}${index}"><img src="${imagem}"><p>${resposta}</p></div>`
 
                 let boxDaResposta = document.querySelector(`.box-das-respostas-${i}${index}`);
                 if(ehRespostaCorreta === true){
                     boxDaResposta.classList.add("acertou");
-                    
                 }else{
                     boxDaResposta.classList.add("errou");
                 }
-
             }
-
     }
 }
        
-    function comparador() { 
-        return Math.random() - 0.5; 
-    };
+function comparador() { 
+    return Math.random() - 0.5; 
+};
 
+let contadorAcertos = 0;
+let contadorErros = 0;
+let divPai;
+function tentarAcertar(element){
+    divPai = element.parentNode;
+    let todasAsBoxDaquelePai = divPai.childNodes;
+    
+    let testeScroll = document.querySelector('.div-das-respostas')
 
+    if (element.classList.contains("acertou")){
+        contadorAcertos++
+    } else{
+        contadorErros++
+    }
+    
+    for(i=0; i<todasAsBoxDaquelePai.length; i++){
+        if(todasAsBoxDaquelePai[i].classList.contains("acertou")){
+            todasAsBoxDaquelePai[i].classList.add("resposta-correta");
+            contadorAcertos;
+        }
+        if(todasAsBoxDaquelePai[i].classList.contains("errou")){
+                todasAsBoxDaquelePai[i].classList.add("resposta-errada");    
+        }
+        if(divPai.parentNode.nextElementSibling !== null){
+            divPai.parentNode.nextElementSibling.scrollIntoView(
+                {block: "end", behavior: "smooth"}
+            );
+        }
+        console.log(divPai.parentNode.nextElementSibling); 
+    }    
+    quantoTaPlacar();    
+}
 
+function quantoTaPlacar(){
+    let pegardivAvo = divPai.parentNode.parentNode;
+    let contadorDePerguntas = pegardivAvo.childNodes.length-1;
+    
+    if(contadorAcertos + contadorErros === contadorDePerguntas-1){    
+        console.log("RESPONDEU TUDO")
+        console.log('o número de acertos foi: '+contadorAcertos);
+        console.log('o número de acertos foi: '+contadorErros);
+        let porcentagem = (contadorAcertos/(contadorAcertos+contadorErros)*100);
+        let resultadoFinal = Math.trunc(porcentagem);
+    }
+}
+
+function AparecerNivel (){
+
+}
+
+    
 //Fim Juan
 
 
