@@ -58,7 +58,7 @@ function abrirQuizz(respostaIndividual){
     document.querySelector(".pagina-de-um-quizz").innerHTML =   `<div                                    
                                                                 class="foto-de-capa-quizz">
                                                                 <img src="${quizzImage}"><p>${quizzTitle}</p>
-                                                                acertos                          </div>`
+                                                                </div>`
     
     
     console.log(arrayQuestions.length)
@@ -123,11 +123,11 @@ function tentarAcertar(element){
     
     for(i=0; i<todasAsBoxDaquelePai.length; i++){
         if(todasAsBoxDaquelePai[i].classList.contains("acertou")){
-            todasAsBoxDaquelePai[i].classList.add("resposta-correta");
+            todasAsBoxDaquelePai[i].classList.add("correta");
             contadorAcertos;
         }
         if(todasAsBoxDaquelePai[i].classList.contains("errou")){
-                todasAsBoxDaquelePai[i].classList.add("resposta-errada");    
+                todasAsBoxDaquelePai[i].classList.add("errada");    
         }
         if(divPai.parentNode.nextElementSibling !== null){
             divPai.parentNode.nextElementSibling.scrollIntoView(
@@ -162,17 +162,43 @@ function quantoTaPlacar(){
 function AparecerNivel (){
     console.log("finalmente posso aparecer");
     let lugarDaPergunta = document.querySelector(".pagina-de-um-quizz");
-    console.log(lugarDaPergunta)
-    lugarDaPergunta.innerHTML += "Eu sou a donde o nível vai entrar"
-
+    console.log(lugarDaPergunta)    
+    /*
+    lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
+                                    <div class="topo-porcentagem-nivel" style="background-color: #000000"" >
+                                    <p>88% de acerto: Você é praticamente um aluno de Hogwarts!</p>
+                                    </div>
+                                    <div class="div-do-nivel">
+                                            <img src="https://www.clubeparacachorros.com.br/wp-content/uploads/2018/07/cachorro-fofo-beagle-curioso.jpg" alt="imagem-do-nivel">
+                                            <span class="descricao-do-nivel">Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</span>
+                                    </div>
+                                </div>
+                                `
+    */
+    console.log(resultadoFinal);
+    console.log(typeof(resultadoFinal));
+    let melhorNivel = resultadoFinal;
+    let posicaoCerta = 0;
     for(let i = 0; i < arrayLevels.length; i++){
         console.log(arrayLevels[i]);
         console.log(arrayLevels[i].minValue);
-        
-        //<template> pair< <int>,<int> >;
-        //->>
-        
+        if(melhorNivel >= arrayLevels[i].minValue){
+            console.log(melhorNivel, "aquiiii")
+            // melhorNivel = arrayLevels[i].minValue;
+            posicaoCerta = i;
+        }
     }
+    console.log(melhorNivel, posicaoCerta);
+    lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
+                                    <div class="topo-porcentagem-nivel" style="background-color: #000000"" >
+                                    <p>${resultadoFinal}% de acerto: ${arrayLevels[posicaoCerta].title}</p>
+                                    </div>
+                                    <div class="div-do-nivel">
+                                            <img src="${arrayLevels[posicaoCerta].image}" alt="imagem-do-nivel">
+                                            <span class="descricao-do-nivel">${arrayLevels[posicaoCerta].text}</span>
+                                    </div>
+                                </div>
+                                `
 }
 /*Template <string> cin >> File.open(`dc.cpp`) 
 

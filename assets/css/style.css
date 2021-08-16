@@ -495,16 +495,24 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    word-break: break-word;
+    overflow-y: scroll;
 }
 
-.topo-pergunta p{
+.topo-pergunta p, .topo-porcentagem-nivel p{
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 23px;
     line-height: 27px;
     color: #FFFFFF;
+    margin-left: 16px;
+    word-break: break-word;
 }
+
+/* .topo-porcentagem-nivel p{
+    margin-left: 16px;
+} */
 
 .div-das-respostas{
     margin-left: auto;
@@ -516,7 +524,56 @@ body{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    word-break: break-word;
 }
+
+.topo-porcentagem-nivel{
+    margin-left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    top: 22px;
+    width: 727px;
+    height: 137px;
+    background: #434CA0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: break-word;
+    overflow-y: scroll;
+}
+
+.div-do-nivel{
+    margin-left: auto;
+    margin-right: auto;
+    /* margin-inline: auto; */
+    padding-top: 165px;
+    width: 720px;
+    height: 412px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow-wrap: break-word;
+}
+
+.div-do-nivel img{
+    width:  364px;
+    height: 273px;
+    margin-top: 10px;
+}
+.div-do-nivel .descricao-do-nivel{
+    /* background-color: red; */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #484848;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 19px;
+    margin-left: 8px;
+    margin-top: 8px;
+    width: 45%;
+}
+
 
 .box-das-respostas img{
     margin-top: 12px;
@@ -533,7 +590,7 @@ margin-top: 7px;
 margin-bottom: 17px;
 }
 
-.resposta-correta{
+/* .resposta-correta{
     color: #009C22;
     pointer-events: none;
     filter: opacity(50%);
@@ -543,8 +600,17 @@ margin-bottom: 17px;
     color: red;
     filter: opacity(50%);
     pointer-events: none;
+} */
+.correta{
+    color: #009C22;
+    pointer-events: none;
+    filter: opacity(50%);
 }
-
+.errada{
+    color: red;
+    filter: opacity(50%);
+    pointer-events: none;
+}
 .opacidade{
     filter: opacity(100%);
 }
@@ -624,6 +690,19 @@ h1{
     width: 340px;
     height: 181px;
 }
+
+.icones-opcoes-modificacao img{
+    height: 20px;
+    width: 20px;
+    margin-left: 3px;
+    z-index: 9999;
+    pointer-events:auto;
+}
+.icone-deletar{
+    font-size: 25px;
+    z-index: 9999;
+    pointer-events:auto;
+}
 }
 
 /*FIM @media1100 JUAN*/
@@ -657,6 +736,18 @@ h1{
 /* //roseno icone */
 .section{
     width: 85vw;
+}
+.icones-opcoes-modificacao img{
+    height: 20px;
+    width: 20px;
+    margin-left: 3px;
+    z-index: 9999;
+    pointer-events:auto;
+}
+.icone-deletar{
+    font-size: 25px;
+    z-index: 9999;
+    pointer-events:auto;
 }
 } 
 /*FIM @media375 JUAN*/
