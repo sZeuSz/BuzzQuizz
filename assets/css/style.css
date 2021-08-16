@@ -370,7 +370,7 @@ body {
     position: absolute;
     top: 10px;
     right: 0;
-    z-index: 9999;
+    z-index: 3;
     height: 87px;
     width: 43px;
     background-color: #EC362D;
@@ -824,7 +824,7 @@ body {
 
     .topo-pergunta {
         top: 22px;
-        width: 90vw;
+        width: 85vw;
     }
 
     .topo-pergunta p {
@@ -852,6 +852,53 @@ body {
         margin-left: 7px;
         height: auto;
     }
+
+
+.div-do-nivel {
+    margin-left: auto;
+    margin-right: auto;
+    /* margin-inline: auto; */
+    padding-top: 165px;
+    width: 720px;
+    height: 412px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow-wrap: break-word;
+    width: 90vw;
+    height: auto;
+    justify-content: space-around;
+}
+
+.div-do-nivel img {
+    width: 85vw;
+    margin-left: 10px;
+    margin-right: 7px;
+}
+.div-do-nivel .descricao-do-nivel {
+    /* background-color: red; */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #484848;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 19px;
+    margin-left: 8px;
+    margin-top: 8px;
+    width: 45%;
+    width: 40vw;
+    word-break: break-word;
+    max-width: 329px;
+    margin-left: 7px;
+    height: auto;
+}
+.topo-porcentagem-nivel{
+    height: auto;
+    width: 85vw;
+    word-break: break-word;
+    height: auto;
+}
 }
 
 /* @media (max-width: 382px){

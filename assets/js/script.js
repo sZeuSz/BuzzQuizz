@@ -1,6 +1,64 @@
 const URL_QUIZZES = "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes"
+let tituloDoQuiz;
+let tituloUrlDaImagem;
+let qtdPerguntas;
+let qtdNiveis;
+let perguntaAtual = 1;
+let textoPergunta;
+let cor;
+let respostaCorreta;
+let respostaCorretaImagem1;
+let respostaIncorreta1;
+let respostaIncorreta2;
+let respostaIncorreta3;
+let respostaIncorretaImagem1;
+let respostaIncorretaImagem2;
+let respostaIncorretaImagem3;
+let listaDeIdsDosQuizzesDoUsuario;
+let listaDeIdsSerializados;
+let arrayDasRespostas = [];
+let arrayLevels;
+let contadorAcertos = 0;
+let contadorErros = 0;
+let resultadoFinal = 0;
+let divPai;
+let levelResposta;
+let pergunta = {
+    title: "Título da pergunta 1",
+    color: "#123456",
+    answers: [
+        {
+            text: "Texto da resposta 1",
+            image: "https://http.cat/411.jpg",
+            isCorrectAnswer: true
+        },
+        {
+            text: "Texto da resposta 2",
+            image: "https://http.cat/412.jpg",
+            isCorrectAnswer: false
+        }
+    ]
+}
+let nivel = {
+    title: "Título do nível 1",
+    image: "https://http.cat/411.jpg",
+    text: "Descrição do nível 1",
+    minValue: 0
+}
+let quiz = {
+title: "Título do quizz",
+image: "https://http.cat/411.jpg",
+questions: [
+    {
+        title: "Título da pergunta 1",
+        color: "#123456",
+        answers: []
+    }],
+levels: []
+}
 
 buscarQuizzes();
+BuscarQuizzesDoUsuário();
 
 function buscarQuizzes (){
     const promise = axios.get(URL_QUIZZES);
@@ -35,18 +93,11 @@ function esconderTela(){
     document.querySelector(".home").classList.toggle("esconder");
     document.querySelector(".pagina-de-um-quizz").classList.toggle("esconder");
 }
-
-
-
-//funçao pra mostrar quizzes:
 function urlDosIDs(elemento){
     const promise = axios.get(URL_QUIZZES + "/" + elemento.id);
     promise.then(abrirQuizz);
 }
 
-
-let arrayDasRespostas = [];
-let arrayLevels;
 function abrirQuizz(respostaIndividual){
     contadorAcertos = 0;
     contadorErros = 0;
@@ -56,24 +107,14 @@ function abrirQuizz(respostaIndividual){
     const quizzImage = quizzIndividual.image;
     const quizzTitle = quizzIndividual.title;
     let arrayQuestions = quizzIndividual.questions;
-    console.log(quizzIndividual.levels)
     arrayLevels = quizzIndividual.levels;
-    const imageLevel = arrayLevels.image;       
-    const minValueLevel = arrayLevels.minValue;
-    const textLevel = arrayLevels.text;  
-    const titleLevel = arrayLevels.title;
     
     document.querySelector(".pagina-de-um-quizz").innerHTML =   `<div                                    
                                                                 class="foto-de-capa-quizz" id="${quizId}">
                                                                 <img src="${quizzImage}"><p>${quizzTitle}</p>
                                                                  </div>`
 
-
-    
-    
-    console.log(arrayQuestions.length)
     for (let i=0; i< arrayQuestions.length; i++){
-        console.log("debugger")
         let questionTitle = arrayQuestions[i].title;
         let questionColor = arrayQuestions[i].color;
         
@@ -84,28 +125,25 @@ function abrirQuizz(respostaIndividual){
                                         </div>
                                         <div class="div-das-respostas div-das-respostas-${i}"></div>
                                       </div>`
-    //CRIAÇAO DO LEVEL
-    //<template <string>>
-    //FIM DA CRIAÇÃO DO LEVEL
-            arrayQuestions[i].answers.sort(comparador);
+        arrayQuestions[i].answers.sort(comparador);
 
-            for (let index=0; index<arrayQuestions[i].answers.length; index++){
-                let resposta = arrayQuestions[i].answers[index].text;
-                let imagem = arrayQuestions[i].answers[index].image;
-                let ehRespostaCorreta = arrayQuestions[i].answers[index].isCorrectAnswer;
- 
-                let lugarDasRespostas = document.querySelector(`.div-das-respostas-${i}`); 
-                 
-                 lugarDasRespostas.innerHTML += 
-                                                `<div class="box-das-respostas box-das-respostas-${i}${index}" onclick="tentarAcertar(this)"id="${i}${index}"><img src="${imagem}"><p>${resposta}</p></div>`
+        for (let index=0; index<arrayQuestions[i].answers.length; index++){
+            let resposta = arrayQuestions[i].answers[index].text;
+            let imagem = arrayQuestions[i].answers[index].image;
+            let ehRespostaCorreta = arrayQuestions[i].answers[index].isCorrectAnswer;
 
-                let boxDaResposta = document.querySelector(`.box-das-respostas-${i}${index}`);
-                if(ehRespostaCorreta === true){
-                    boxDaResposta.classList.add("acertou");
-                }else{
-                    boxDaResposta.classList.add("errou");
-                }
+            let lugarDasRespostas = document.querySelector(`.div-das-respostas-${i}`); 
+                
+                lugarDasRespostas.innerHTML += 
+                                            `<div class="box-das-respostas box-das-respostas-${i}${index}" onclick="tentarAcertar(this)"id="${i}${index}"><img src="${imagem}"><p>${resposta}</p></div>`
+
+            let boxDaResposta = document.querySelector(`.box-das-respostas-${i}${index}`);
+            if(ehRespostaCorreta === true){
+                boxDaResposta.classList.add("acertou");
+            }else{
+                boxDaResposta.classList.add("errou");
             }
+        }
     }
 }
        
@@ -113,17 +151,11 @@ function comparador() {
     return Math.random() - 0.5; 
 };
 
-let contadorAcertos = 0;
-let contadorErros = 0;
-let resultadoFinal = 0;
-let divPai;
-let levelResposta;
 function tentarAcertar(element){
     divPai = element.parentNode;
     let todasAsBoxDaquelePai = divPai.childNodes;
+
     element.classList.toggle("opacidade");
-    console.log(todasAsBoxDaquelePai)
-    let testeScroll = document.querySelector('.div-das-respostas')
     
     if (element.classList.contains("acertou")){
         contadorAcertos++
@@ -144,72 +176,35 @@ function tentarAcertar(element){
                 {block: "end", behavior: "smooth"}
             );
         }
-        console.log(divPai.parentNode.nextElementSibling); 
     }
-    console.log(element.classList)    
     quantoTaPlacar();
 
-    //<template String>
 }
 
 function quantoTaPlacar(){
     let pegardivAvo = divPai.parentNode.parentNode;
-    console.log("DIVEEE AVOOOO ->>>", pegardivAvo);
-    console.log("DIVEEE AVOOO filhos ->>>>>>", pegardivAvo.childNodes)
 
     let contadorDePerguntas = pegardivAvo.childNodes.length-1;
-    console.log(contadorDePerguntas)
-    if(contadorAcertos + contadorErros === contadorDePerguntas){     ///contador-1 por que?
-        for (let index = 0; index < pegardivAvo.childNodes.length; index++) {
-            console.log("so vai filhaunm ->>>> ", pegardivAvo.childNodes[index])
-        
-        }
-        console.log("RESPONDEU TUDO")
-        console.log('o número de acertos foi: '+contadorAcertos);
-        console.log('o número de erros foi: '+contadorErros);
-        let porcentagem = (contadorAcertos/(contadorAcertos+contadorErros)*100); //que viaji é essa mermão
-        porcentagem = (contadorAcertos/contadorDePerguntas) * 100; //debugg
-        resultadoFinal = Math.ceil(porcentagem); //arredondar pra cima
-        console.log("poerc- >>> ", porcentagem);
-        console.log("result final ->>>",resultadoFinal);
+    if(contadorAcertos + contadorErros === contadorDePerguntas){
+
+        let porcentagem = (contadorAcertos/contadorDePerguntas) * 100; 
+        resultadoFinal = Math.ceil(porcentagem);
 
         setTimeout(() => {
-            console.log()
             AparecerNivel();
         }, 2000);
     }
 }
 
 function AparecerNivel (){
-    console.log("finalmente posso aparecer");
     let lugarDaPergunta = document.querySelector(".pagina-de-um-quizz");
-    console.log(lugarDaPergunta)    
-    /*
-    lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
-                                    <div class="topo-porcentagem-nivel" style="background-color: #000000"" >
-                                    <p>88% de acerto: Você é praticamente um aluno de Hogwarts!</p>
-                                    </div>
-                                    <div class="div-do-nivel">
-                                            <img src="https://www.clubeparacachorros.com.br/wp-content/uploads/2018/07/cachorro-fofo-beagle-curioso.jpg" alt="imagem-do-nivel">
-                                            <span class="descricao-do-nivel">Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</span>
-                                    </div>
-                                </div>
-                                `
-    */
-    console.log(resultadoFinal);
-    console.log(typeof(resultadoFinal));
     let melhorNivel = resultadoFinal;
     let posicaoCerta = 0;
     for(let i = 0; i < arrayLevels.length; i++){
-        console.log(arrayLevels[i]);
-        console.log(arrayLevels[i].minValue);
         if(melhorNivel >= arrayLevels[i].minValue){
-            console.log(melhorNivel, "aquiiii")
-            // melhorNivel = arrayLevels[i].minValue;
             posicaoCerta = i;
         }
     }
-    console.log(melhorNivel, posicaoCerta);
     lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
                                     <div class="topo-porcentagem-nivel" style="background-color: #000000"" >
                                     <p>${resultadoFinal}% de acerto: ${arrayLevels[posicaoCerta].title}</p>
@@ -220,88 +215,20 @@ function AparecerNivel (){
                                     </div>
                                 </div>
                                 `
-lugarDaPergunta.innerHTML += `<div class="alinhar-column" >
+    lugarDaPergunta.innerHTML += `<div class="alinhar-column" >
                                     <button type="button" onclick="recomecarQuiz()" class="button11">Reiniciar Quizz</button>
                                   <p class="voltar-home11" onclick="voltarParaHome(${2});">Voltar pra home</p>
                                   </div>
                                  `
     document.querySelector(".pagina-de-um-quizz").scrollIntoView({block: "end", behavior: "smooth"});
 }
-/*Template <string> cin >> File.open(`dc.cpp`) 
-*/
 
 function recomecarQuiz(){
     document.querySelector(".foto-de-capa-quizz").scrollIntoView(true)
     acessarQuiz(document.querySelector(".foto-de-capa-quizz"));
 }
-//Fim Juan
-
-
-
-
-
-//Inicio Roseno
-//Formulário 1 Criar Quiz
-let tituloDoQuiz;
-let tituloUrlDaImagem;
-let qtdPerguntas;
-let qtdNiveis;
-let perguntaAtual = 1;
-
-//Formulário 2 Criar Quiz
-let textoPergunta;
-let cor;
-let respostaCorreta;
-let respostaCorretaImagem1;
-let respostaIncorreta1;
-let respostaIncorreta2;
-let respostaIncorreta3;
-let respostaIncorretaImagem1;
-let respostaIncorretaImagem2;
-let respostaIncorretaImagem3;
-
-//
-
-//Listando Quizzes do Usuário
-let listaDeIdsDosQuizzesDoUsuario;
-let listaDeIdsSerializados;
-
-let pergunta = {
-        title: "Título da pergunta 1",
-        color: "#123456",
-        answers: [
-            {
-                text: "Texto da resposta 1",
-                image: "https://http.cat/411.jpg",
-                isCorrectAnswer: true
-            },
-            {
-                text: "Texto da resposta 2",
-                image: "https://http.cat/412.jpg",
-                isCorrectAnswer: false
-            }
-        ]
-    }
-let nivel = {
-        title: "Título do nível 1",
-        image: "https://http.cat/411.jpg",
-        text: "Descrição do nível 1",
-        minValue: 0
-    }
-let quiz = {
-	title: "Título do quizz",
-	image: "https://http.cat/411.jpg",
-	questions: [
-		{
-			title: "Título da pergunta 1",
-			color: "#123456",
-			answers: []
-		}],
-    levels: []
-    }
 
 function criarQuiz(){
-    console.log("criando quiz...")
     let home = document.querySelector(".home");
     let tela1 = document.querySelector(".tela1.content");
 
@@ -310,10 +237,9 @@ function criarQuiz(){
     window.scrollTo(0, 10);
 }
 
-/*Funções tela1 de criar Quiz */
 function renderizarCriacaoDePerguntas(){
     let perguntasForms = document.querySelector(".tela2.content .perguntas");
-    qtdPerguntas = 3//apague
+    qtdPerguntas = 3;
     for(let i = 2; i <= qtdPerguntas; i++){
 
         perguntasForms.innerHTML += `<div class="alinha ${i}"> 
@@ -364,16 +290,6 @@ function ehQuizzInvalido(){
     quiz.title = tituloQuiz.value;
     quiz.image = urlImagem.value;
 
-    
-    console.log("salvou todas, passou");
-    console.log("titulo do quiz: ", tituloDoQuiz);
-    console.log("url imagem do quiz: ", tituloUrlDaImagem);
-    console.log("quantidade de perguntas do quiz: ", qtdPerguntas);
-    console.log("quantidade de níveis do quiz: ", qtdNiveis);
-
-    console.log(quiz);
-
-    //return invalida;
     return false;
 }
 
@@ -383,9 +299,6 @@ function criarPerguntas(){
         return;
     }
     
-
-
-    console.log("criando perguntas...")
     let tela1 = document.querySelector(".tela1.content");
     let tela2 = document.querySelector(".tela2.content");
 
@@ -396,12 +309,9 @@ function criarPerguntas(){
 
     renderizarCriacaoDePerguntas();
 }
-/*Fim funções tela1 de criar Quiz */
 
-/*Inicio funções tela 2 de criar Quiz */
 function novaPergunta(elemento){
     let numeroDaPergunta = elemento.parentNode.classList[1];
-    console.log(elemento.parentNode.classList)
     elemento.parentNode.classList.remove("alinha");
     elemento.parentNode.classList.remove(`${numeroDaPergunta}`);
     
@@ -427,9 +337,6 @@ function novaPergunta(elemento){
                                     `
     
 }
-// #6char
-// #FAFAFA
-// #000000 -> false debugger
 
 function ehHexadecimal(string) {
     if(string[0] === "#" && string.length === 7){
@@ -443,13 +350,9 @@ const ehUrlValida = function (string){
     try { return Boolean(new URL(string)); }
     catch(e){ invalid = true; return false; }
 }
+
 function temRespostasValidas(r, img, r1, img1, r2, img2, r3, img3){
     let incorretas = 0;
-    console.log(r, img)
-
-    console.log(r1, img1)
-    console.log(r2, img2)
-    console.log(r3, img3)
 
     const ehUrlValida = function (string){
         try { return Boolean(new URL(string)); }
@@ -465,13 +368,11 @@ function temRespostasValidas(r, img, r1, img1, r2, img2, r3, img3){
         alert("A url da imagem de resposta correta deve ter formato de url");
         return false;
     }
-    //Ter de 2 à 3 respostas incorretas
+
     if(r1.replaceAll(" ", "").length != 0 && (img1.replaceAll(" ", "").length != 0 && ehUrlValida(img1))){incorretas++} 
     if(r2.replaceAll(" ", "").length != 0 && (img2.replaceAll(" ", "").length != 0 && ehUrlValida(img2))){incorretas++}
     if(r3.replaceAll(" ", "").length != 0 && (img3.replaceAll(" ", "").length != 0 && ehUrlValida(img3))){incorretas++}
     
-    console.log(incorretas)
-
     if(incorretas >= 1){
         return true;
     }
@@ -481,8 +382,6 @@ function temRespostasValidas(r, img, r1, img1, r2, img2, r3, img3){
         return false;
     }
 
-    
-    return true;
 }
 
 function ehPerguntaValida(perguntaTexto){
@@ -493,6 +392,7 @@ function ehPerguntaValida(perguntaTexto){
 
     return true;
 }
+
 function renderizarCriacaoDeNiveis(){
     let niveisForms = document.querySelector(".tela3.content .niveis");
 
@@ -526,11 +426,8 @@ function saoPerguntasInvalidas(){
         let respostaIncorretaImage2 = document.querySelector(`.pergunta-${i} .resposta-incorreta-url-2`);
         let respostaIncorreta3 = document.querySelector(`.pergunta-${i} .resposta-incorreta-3`);
         let respostaIncorretaImage3 = document.querySelector(`.pergunta-${i} .resposta-incorreta-url-3`);
-        console.log("i ->>> ", i)
-        console.log(perguntaTexto, cor, respostaCorreta, imagemRespostaCorretaUrl, respostaIncorreta1, respostaIncorretaImage1);
-
+       
         if(!ehPerguntaValida(perguntaTexto.value)){
-            console.log("Pergunta invalida");
             return true;
         }
         if(!ehHexadecimal(cor.value)){
@@ -538,7 +435,6 @@ function saoPerguntasInvalidas(){
             return true;
         }
         if(!temRespostasValidas(respostaCorreta.value, imagemRespostaCorretaUrl.value, respostaIncorreta1.value, respostaIncorretaImage1.value, respostaIncorreta2.value, respostaIncorretaImage2.value, respostaIncorreta3.value, respostaIncorretaImage3.value)){
-            console.log("As respostas estão invalidas");
             return true;
         }
 
@@ -553,24 +449,21 @@ function saoPerguntasInvalidas(){
                 text: respostaIncorreta1.value,
                 image: respostaIncorretaImage1.value,
                 isCorrectAnswer: false
-            }); //Debugger
-            console.log("sim")
+            }); 
         } 
         if(respostaIncorreta2.value.replaceAll(" ", "").length != 0 && (respostaIncorretaImage2.value.replaceAll(" ", "").length != 0 && ehUrlValida(respostaIncorretaImage2.value))){
             respostas.push({
                 text: respostaIncorreta2.value,
                 image: respostaIncorretaImage2.value,
                 isCorrectAnswer: false
-            });//Debugger
-            console.log("sim")
+            });
         }
         if(respostaIncorreta3.value.replaceAll(" ", "").length != 0 && (respostaIncorretaImage3.value.replaceAll(" ", "").length != 0 && ehUrlValida(respostaIncorretaImage3.value))){
             respostas.push({
                 text: respostaIncorreta3.value,
                 image: respostaIncorretaImage3.value,
                 isCorrectAnswer: false
-            });//Debugger
-            console.log("sim")
+            });
         }
 
         let pergunta = {
@@ -580,12 +473,9 @@ function saoPerguntasInvalidas(){
         }
 
         perguntas.push(pergunta);
-    }  
-    console.log("passou");
-    console.log(perguntas)
+    }
     quiz.questions = perguntas;
-    console.log("QUIZ pos TELA 2");
-    console.log(quiz)
+
     return false;
 }
 
@@ -593,8 +483,6 @@ function criarNiveis(){
     if(saoPerguntasInvalidas()){
         return;
     }
-    console.log("paaxoo")
-    console.log("criando niveis...")
     let tela2 = document.querySelector(".tela2.content");
     let tela3 = document.querySelector(".tela3.content");
 
@@ -603,13 +491,10 @@ function criarNiveis(){
     window.scrollTo(0, 10);
     renderizarCriacaoDeNiveis();
 }
-/*fim funções tela 2 de criar Quiz */
 
-/*Inicio tela 3 de Criar Quizz */
 function novoNivel(elemento){
     let numeroDoNivel = elemento.parentNode.classList[1];
     
-    console.log(elemento.parentNode.classList)
     elemento.parentNode.classList.remove("alinha");
     elemento.parentNode.classList.remove(`${numeroDoNivel}`);
     
@@ -648,8 +533,6 @@ function ehNivelValido(){
         let urlImagemNivel = document.querySelector(`.nivel-${i} .url-imagem-nivel`);
         let descricaoNivel = document.querySelector(`.nivel-${i} .descricao`);
         
-        console.log(tituloNivel.value, acertoMinimo.value, urlImagemNivel.value, descricaoNivel.value);
-
         if(tituloNivel.value.length < 10){
             alert("O título do nível deve ter mínimo de 10 caracteres");
             return false;
@@ -679,7 +562,7 @@ function ehNivelValido(){
 
         niveis.push(nivel);
         
-    }//VOcê está aqui
+    }
 
     if(!temMinimoZero){
         alert("É obrigatório existir pelo menos 1 nível cuja % de acerto mínima seja 0%")
@@ -687,19 +570,15 @@ function ehNivelValido(){
     }
 
     quiz.levels = niveis;
-    console.log("passou nos níveis")
-    console.log("Quiz pos levels")
-    console.log(quiz)
     return true;
 }
 function finalizarQuiz(){
-    //validação
+
     if(ehNivelValido()){
 
         const promise = axios.post(URL_QUIZZES, quiz);
         promise.then(SucessoAoPostarQuiz);
         promise.catch(ErroAoPostarQuiz);
-        console.log("Finalizando quiz...")
     }
     return;
 }
@@ -711,15 +590,11 @@ function acessarQuiz(elemento){
 }
 
 function SucessoAoPostarQuiz(sucesso){
-    console.log("O Post foi um sucesso meu babyssauro, bora fazer todo o processo")
     let tela3 = document.querySelector(".tela3.content");
     let tela4 = document.querySelector(".tela4");
 
-    //debbug cout << "Fully".around()
     tela3.classList.toggle("esconder"); 
-    tela4.classList.toggle("esconder"); 
-
-    console.log(tela4.innerHTML);
+    tela4.classList.toggle("esconder");
 
     tela4.innerHTML = "";
     
@@ -727,13 +602,17 @@ function SucessoAoPostarQuiz(sucesso){
                             <p class="titulo-desktop11">Seu quizz está pronto!</p>
                             <div class="box11" onclick="acessarQuiz(this)" id="${sucesso.data.id}" >
                                 <div class="background-linear11"></div>
-                                <div class="icones-opcoes-modificacao"></div>
+                                <div class="icones-opcoes-modificacao" onclick="antiClick()">
+                                    <img onclick="testeEdit()" class="icone-editar" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
+                                    <ion-icon onclick="testeDelete()" class="icone-deletar md hydrated" name="trash-outline" role="img" aria-label="trash outline"></ion-icon>
+                                </div>
                                 <img src="${sucesso.data.image}">
                                 <p>${sucesso.data.title}</p>
                             </div>
                             <button type="button" onclick="acessarQuiz(this)" id="${sucesso.data.id}" class="button11">Acessar Quizz</button>
-                            <p class="voltar-home11" onclick="voltarParaHome(${1});">Voltar pra home</p>
+                            <p class="voltar-home11" onclick="voltarParaHome(${1});" >Voltar pra home</p>
                         </div>`
+
 
     let listaDeIdsDoUsuario = localStorage.getItem("ids");
 
@@ -750,19 +629,15 @@ function SucessoAoPostarQuiz(sucesso){
     }
 
     window.scrollTo(0, 10);
-    console.log(sucesso);
 }
 function ErroAoPostarQuiz(erro){
-    console.log(erro.response.status);
     alert("deu bug no servidor, programei errado")
     window.location.reload();
 }
 
-/*Inicio tela 3 de Criar Quizz */
 function voltarParaHome(retorno){
 
     if(retorno === 1){
-        console.log("Voltando para tela inicial...")
         let tela4 = document.querySelector(".tela4");
         let home = document.querySelector(".home");
 
@@ -770,10 +645,8 @@ function voltarParaHome(retorno){
         home.classList.toggle("esconder"); 
         window.scrollTo(0, 10);
     }else{
-        console.log("Saindo do quizz e voltando para tela inicial...")
         let paginaDoQuiz = document.querySelector(".pagina-de-um-quizz");
         paginaDoQuiz.innerHTML = "";
-        console.log(paginaDoQuiz.parentElement);
         let home = document.querySelector(".home");
 
         paginaDoQuiz.classList.toggle("esconder"); 
@@ -782,14 +655,6 @@ function voltarParaHome(retorno){
     }
 }
 
-/*  
-    ATENÇÃO NÃO ESQUEÇAM DE JOGAR ESSA FUNÇÃO LÁ PÁ CIMA
-    IDEIA => BuscarQuizzesDoUsuário(){
-                    (faz o negoico dos ids)
-                    chama a ota função de listar todos os outros quizzes
-                    BuscarTodosOsQuizzes();
-            }
-*/
 function SucessoAoBuscarQuizzesDoUsuario(sucesso){
     let divDosQuizzes = document.querySelector(".container.user .todos-os-quizzes");
     let QuizzesDoUsuario = localStorage.getItem("ids");
@@ -803,26 +668,21 @@ function SucessoAoBuscarQuizzesDoUsuario(sucesso){
             `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
                 <div class="background-linear"></div>
                 <div class="icones-opcoes-modificacao" onclick="antiClick()">
-                    <img onclick="testeEdit()" class="icone-editar" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
-                    <ion-icon onclick="testeDelete()" class="icone-deletar" name="trash-outline"></ion-icon>
+                    <img onclick="testeEdit()" id="${id} class="icone-editar" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
+                    <ion-icon onclick="deletarQuiz(this)" id="${id} class="icone-deletar" name="trash-outline"></ion-icon>
                 </div>
                 <img src="${image}">
                 <p>${title}</p>
             </div>`
 }
-/*testeEDITDELETE cin << debugger << template <string> << Olimpoyy << pair<int , FILE.open()> */
 function antiClick(){
-    alert("anticlicou");
     esconderTela();
 }
 function testeEdit(){
-    alert("editando")
     esconderTela();
     esconderTela();
-    criarQuiz();
 }
 function testeDelete(){
-    confirm("tem certeza que deseja excluir o Quiz?");
     esconderTela();
     esconderTela();
 }
@@ -831,7 +691,6 @@ function ErroAoBuscarQuizzesDoUsuario(erro){
     if(erro.response.error === 400){
         document.querySelector(".usuario").classList.toggle("esconder")
     }
-    console.log("Sem videos do usuario, inicializando tela padron...");
 }
 function BuscarQuizzesDoUsuário(){
     let QuizzesDoUsuario = localStorage.getItem("ids");
@@ -839,154 +698,40 @@ function BuscarQuizzesDoUsuário(){
 
     if(QuizzesDoUsuario === null){
         ErroAoBuscarQuizzesDoUsuario({response:{error:400}});
-        console.log("numtem")
         return;
     }
 
     for(let i = 0; i < QuizzesDoUsuario.length; i++){
-        console.log(QuizzesDoUsuario[i].id)
         const promise = axios.get(URL_QUIZZES + "/" + QuizzesDoUsuario[i].id);
         promise.then(SucessoAoBuscarQuizzesDoUsuario);
         promise.catch(ErroAoBuscarQuizzesDoUsuario);
     }
 }
-BuscarQuizzesDoUsuário();
-//Fim Roseno
-
-function debbugerLocalStorage(){
-
-    // cin >> while(File.open());
-
-    // template String < template static >
-    
-    console.log("teste")
-
-    //let nomes =  ["isso", "aqui", "ehdemais"];
-    //nomes = JSON.stringify(nomes);
-     /*
-    template <typename T>
-    class Array {
-        private:
-        T *ptr;
-        int size;
-        public:
-        Array(T arr[], int s);
-        void print();
-    };
-
-    template <typename T>
-        Array<T>::Array(T arr[], int s) {
-            ptr = new T[s];
-            size = s;
-            for(int i = 0; i < size; i++)
-                ptr[i] = arr[i];
-            }
-
-    template <typename T>
-    void Array<T>::print() {
-        for (int i = 0; i < size; i++)
-            cout<<" "<<*(ptr + i);
-        cout<<endl;
-    }*/
-    //localStorage.setItem("jj", nomes);
-    //localStorage.setItem("jj", '["jubileu"]');
-    let nomes = localStorage.getItem("kk");
-    let nome = "jubii"
-    console.log(nomes)
-    if(nomes === null){
-        nomes = [nome];
-        nomes = JSON.stringify(nomes);
-        localStorage.setItem("kk", nomes);
-    }
-    else{
-        nomes = JSON.parse(nomes);
-        nomes.push("jujumalvada")
-        nomes = JSON.stringify(nomes);
-        console.log(nomes)
-        localStorage.setItem("kk", nomes);
-    }
-    console.log(nomes)
-    /*
-    template <typename T>
-    class Array {
-        private:
-        T *ptr;
-        int size;
-        public:
-        Array(T arr[], int s);
-        void print();
-    };
-
-    template <typename T>
-        Array<T>::Array(T arr[], int s) {
-            ptr = new T[s];
-            size = s;
-            for(int i = 0; i < size; i++)
-                ptr[i] = arr[i];
-            }
-
-    template <typename T>
-    void Array<T>::print() {
-        for (int i = 0; i < size; i++)
-            cout<<" "<<*(ptr + i);
-        cout<<endl;
-    }*/
-}
-
-
-// debbugerLocalStorage();
-
-
-/**
- * 
- * Tentativa de fazer o bônus de deletar usando a sagacidade 
- * 
- * axios.delete(URL, 
- *  {headers: {
- *              Authorization: authorizationToken
- *          }, 
- *      data:{
- *              source: source
- *      }
- *  });
- */
-
 
 function erroAoDeletarQuiz(error){
     alert("programei errado, disculpe")
 }
 function SucessoAoDeletarQuiz(){
-    console.log("Deletou com sucesso");
     BuscarQuizzesDoUsuário();
 }
 
 function deletarQuiz(elemento){
 
-    confirm("Deseja mesmo deletar o Quiz?")
+    if(confirm("tem certeza que deseja excluir o Quiz?")){
+        let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
+        let posicaoDoQuiz = QuizUsuario.map(function(quiz) {return quiz.id;}).indexOf(elemento.id);
 
-    let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
-    let posicaoDoQuiz = QuizUsuario.map(function(quiz) {return quiz.id;}).indexOf(elemento.id);
-    console.log("dento -:>>>> ", posicaoDoQuiz)
-    console.log("dento -:>>>> ", QuizUsuario[posicaoDoQuiz].key)
-    const promise = axios.delete(URL_QUIZZES + "/" + elemento.id, {
-        headers:{
-                "Secret-Key": QuizUsuario[posicaoDoQuiz].key
-        }
-    });
-    QuizUsuario = QuizUsuario.splice(posicaoDoQuiz);
-    QuizUsuario = JSON.stringify(QuizUsuario);
-    localStorage.setItem("ids", QuizUsuario);
-    
-    promise.then(SucessoAoDeletarQuiz);
-    promise.catch(erroAoDeletarQuiz);
+        const promise = axios.delete(URL_QUIZZES + "/" + elemento.id, {
+            headers:{
+                    "Secret-Key": QuizUsuario[posicaoDoQuiz].key
+            }
+        });
+
+        QuizUsuario = QuizUsuario.splice(posicaoDoQuiz);
+        QuizUsuario = JSON.stringify(QuizUsuario);
+        localStorage.setItem("ids", QuizUsuario);
+        
+        promise.then(SucessoAoDeletarQuiz);
+        promise.catch(erroAoDeletarQuiz);
+    }
 }
-// deletarQuiz({id:305, key: "da7b7380-9067-4e3c-b8f7-161e5304a588"})
-/* 
-<template> debuuger > pair<pair<pair<int>,<int> bugg>
-let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
-console.log(QuizUsuario[0])
-console.log( QuizUsuario.indexOf({"id":305}))
-console.log(QuizUsuario.map(function(e) { return e.id; }).indexOf(305));
-console.log(localStorage.getItem("ids"));
-console.log(JSON.parse(localStorage.getItem("ids"))[2]);
-*/
