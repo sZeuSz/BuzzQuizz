@@ -41,16 +41,15 @@ function urlDosIDs(elemento){
 
 
 let arrayDasRespostas = [];
-
+let arrayLevels;
 function abrirQuizz(respostaIndividual){
-    
     const quizzIndividual = respostaIndividual.data;
     const quizId = quizzIndividual.id;
     const quizzImage = quizzIndividual.image;
     const quizzTitle = quizzIndividual.title;
     let arrayQuestions = quizzIndividual.questions;
     console.log(quizzIndividual.levels)
-    let arrayLevels = quizzIndividual.levels;
+    arrayLevels = quizzIndividual.levels;
     const imageLevel = arrayLevels.image;       
     const minValueLevel = arrayLevels.minValue;
     const textLevel = arrayLevels.text;  
@@ -59,11 +58,12 @@ function abrirQuizz(respostaIndividual){
     document.querySelector(".pagina-de-um-quizz").innerHTML =   `<div                                    
                                                                 class="foto-de-capa-quizz">
                                                                 <img src="${quizzImage}"><p>${quizzTitle}</p>
-                                                                </div>`
+                                                                acertos                          </div>`
     
     
-
-    for (let i=0; i<arrayQuestions.length; i++){
+    console.log(arrayQuestions.length)
+    for (let i=0; i< arrayQuestions.length; i++){
+        console.log("debugger")
         let questionTitle = arrayQuestions[i].title;
         let questionColor = arrayQuestions[i].color;
         
@@ -75,27 +75,7 @@ function abrirQuizz(respostaIndividual){
                                         <div class="div-das-respostas div-das-respostas-${i}"></div>
                                       </div>`
     //CRIAÇAO DO LEVEL
-        // if(arrayQuestions.length-1 === i){
-        //     for(i=0; i<arrayLevels.length;i++){
-        //         if (resultadoFinal === 0){
-
-        //         }
-
-        //         if(resultadoFinal >= arrayLevels[i].minValue  && resultadoFinal <= arrayLevels[i+1].minValue){
-        //             // **se ele entrar aqui eu boto pra criar a div dos levels** 
-        //             //**  **
-
-        //              console.log (resultadoFinal + '% de acerto')
-        //         }
-
-
-        //     lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
-        //                                   <div class="topo-pergunta" style="background-color: #EC362D">
-        //                                   <p>${titleLevel}</p>
-        //                                   </div>
-        //                                   </div>`
-        //     }
-        // }
+    //<template <string>>
     //FIM DA CRIAÇÃO DO LEVEL
             arrayQuestions[i].answers.sort(comparador);
 
@@ -125,13 +105,16 @@ function comparador() {
 
 let contadorAcertos = 0;
 let contadorErros = 0;
+let resultadoFinal = 0;
 let divPai;
+let levelResposta;
 function tentarAcertar(element){
     divPai = element.parentNode;
     let todasAsBoxDaquelePai = divPai.childNodes;
-    
+    element.classList.toggle("opacidade");
+    console.log(todasAsBoxDaquelePai)
     let testeScroll = document.querySelector('.div-das-respostas')
-
+    
     if (element.classList.contains("acertou")){
         contadorAcertos++
     } else{
@@ -152,28 +135,49 @@ function tentarAcertar(element){
             );
         }
         console.log(divPai.parentNode.nextElementSibling); 
-    }    
-    quantoTaPlacar();    
+    }
+    console.log(element.classList)    
+    quantoTaPlacar();
+
+    //<template String>
 }
 
 function quantoTaPlacar(){
     let pegardivAvo = divPai.parentNode.parentNode;
     let contadorDePerguntas = pegardivAvo.childNodes.length-1;
-    
-    if(contadorAcertos + contadorErros === contadorDePerguntas-1){    
+    console.log(contadorDePerguntas)
+    if(contadorAcertos + contadorErros === contadorDePerguntas){     ///contador-1 por que?
         console.log("RESPONDEU TUDO")
         console.log('o número de acertos foi: '+contadorAcertos);
-        console.log('o número de acertos foi: '+contadorErros);
-        let porcentagem = (contadorAcertos/(contadorAcertos+contadorErros)*100);
-        let resultadoFinal = Math.trunc(porcentagem);
+        console.log('o número de erros foi: '+contadorErros);
+        let porcentagem = (contadorAcertos/(contadorAcertos+contadorErros)*100); //que viaji é essa mermão
+        porcentagem = (contadorAcertos/contadorDePerguntas) * 100; //debugg
+        resultadoFinal = Math.ceil(porcentagem); //arredondar pra cima
+        console.log("poerc- >>> ", porcentagem);
+        console.log("result final ->>>",resultadoFinal);
+        AparecerNivel();
     }
 }
 
 function AparecerNivel (){
+    console.log("finalmente posso aparecer");
+    let lugarDaPergunta = document.querySelector(".pagina-de-um-quizz");
+    console.log(lugarDaPergunta)
+    lugarDaPergunta.innerHTML += "Eu sou a donde o nível vai entrar"
 
+    for(let i = 0; i < arrayLevels.length; i++){
+        console.log(arrayLevels[i]);
+        console.log(arrayLevels[i].minValue);
+        
+        //<template> pair< <int>,<int> >;
+        //->>
+        
+    }
 }
+/*Template <string> cin >> File.open(`dc.cpp`) 
 
-    
+
+*/
 //Fim Juan
 
 
