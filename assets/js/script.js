@@ -259,8 +259,8 @@ function ehQuizzInvalido(){
     let invalida = false;
     let tituloQuiz = document.querySelector(".titulo");
     let urlImagem = document.querySelector(".url-imagem")
-    qtdPerguntas = document.querySelector(".qtd-perguntas").value;
-    qtdNiveis = document.querySelector(".qtd-niveis").value;
+    qtdPerguntas = Number(document.querySelector(".qtd-perguntas").value);
+    qtdNiveis = Number(document.querySelector(".qtd-niveis").value);
     
     const ehUrlValida = function (string){
         try { return Boolean(new URL(string)); }
@@ -278,13 +278,13 @@ function ehQuizzInvalido(){
         invalida = true;
         return true;
     }
-    if(qtdPerguntas < 3){
+    if(qtdPerguntas < 3 || isNaN(qtdPerguntas)){
         alert("A quantidade de perguntas deve ter no mínimo 3 perguntas")
         invalida = true;
         return true;
     }
 
-    if(qtdNiveis < 2){
+    if(qtdNiveis < 2 || isNaN(qtdNiveis)){
         alert("A quantidade de níveis deve ter no mínimo 2 níveis")
         invalida = true;
         return true;
@@ -361,17 +361,12 @@ function novaPergunta(elemento){
 }
 // #6char
 // #FAFAFA
+// #000000 -> false debugger
+
 function ehHexadecimal(string) {
     if(string[0] === "#" && string.length === 7){
-
-        string = string.substring(1);
-        
-        let decimal = parseInt(string, 16);
-                
-        if(decimal.toString(16) === string.toLowerCase()){
-            console.log("se liga, e decimal", decimal.toString(16), " ->> ", string.toLowerCase());
-            return true;
-        }
+        return (typeof string === "string") && string.substring(1).length === 6 
+           && !isNaN(parseInt(string.substring(1), 16));
     }
 
     return false;
@@ -591,7 +586,7 @@ function ehNivelValido(){
             alert("O título do nível deve ter mínimo de 10 caracteres");
             return false;
         }
-        if(Number(acertoMinimo.value) < 0 || Number(acertoMinimo.value) > 100 || acertoMinimo.value === ""){
+        if(Number(acertoMinimo.value) < 0 || Number(acertoMinimo.value) > 100 || acertoMinimo.value === "" || isNaN(parseInt(acertoMinimo.value))){
             alert("A % de acerto mínima deve ser um número entre 0 e 100");
             return false;
         }
@@ -641,23 +636,41 @@ function finalizarQuiz(){
     return;
 }
 
+function acessarQuiz(elemento){
+    document.querySelector(".tela4").classList.toggle("esconder");
+    document.querySelector(".pagina-de-um-quizz").classList.remove("esconder");
+    urlDosIDs(elemento);
+}
+
 function SucessoAoPostarQuiz(sucesso){
     console.log("O Post foi um sucesso meu babyssauro, bora fazer todo o processo")
-    let tela2 = document.querySelector(".tela3.content");
+    let tela3 = document.querySelector(".tela3.content");
     let tela4 = document.querySelector(".tela4");
 
     //debbug cout << "Fully".around()
-    tela2.classList.toggle("esconder"); 
+    tela3.classList.toggle("esconder"); 
     tela4.classList.toggle("esconder"); 
+
+    console.log(tela4.innerHTML);
+
+    tela4.innerHTML = "";
+    
+    tela4.innerHTML += `<div class="tela11">
+                            <p class="titulo-desktop11">Seu quizz está pronto!</p>
+                            <div class="box11">
+                                <div class="background-linear11"></div>
+                                <img src="${sucesso.data.image}">
+                                <p>${sucesso.data.title}</p>
+                            </div>
+                            <button type="button" onclick="acessarQuiz(this)" id="${sucesso.data.id}" class="button11">Acessar Quizz</button>
+                            <p class="voltar-home11" onclick="voltarParaHome();">Voltar pra home</p>
+                        </div>`
     window.scrollTo(0, 10);
     console.log(sucesso);
 }
 function ErroAoPostarQuiz(erro){
     console.log(erro.response.status);
     alert("deu bug no servidor, programei errado")
-}
-function postarQuiz(){
-
 }
 /*Inicio tela 3 de Criar Quizz */
 function voltarParaHome(){
@@ -669,5 +682,6 @@ function voltarParaHome(){
     home.classList.toggle("esconder"); 
     window.scrollTo(0, 10);
 }
+
 
 //Fim Roseno
