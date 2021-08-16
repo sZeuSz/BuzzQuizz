@@ -28,6 +28,18 @@ h1{
     color: #FFFFFF;
 }
 
+.margin{
+    margin-top: 119px;
+    /* margin-bottom: 45px; */
+}
+.icone-criar-quiz{
+    height: 30px;
+    width: 30px;
+    vertical-align: middle;
+    margin-bottom: 2px;
+    margin-left: 2%;
+    color: #EC362D;
+}
 .your-quizzes{
     display: flex;
     flex-direction: column;
@@ -223,6 +235,17 @@ body{
 .container{
     width: 1051px;
     height: auto;
+    margin: 15px auto 45px auto;
+    /* background-color: red; */
+}
+.container:not(.user){
+    width: 1051px;
+    height: auto;
+    margin:0 auto;
+}
+.user-Quiz-Conteiner{
+    width: 1051px;
+    height: auto;
     margin:0 auto;
 }
 
@@ -233,12 +256,34 @@ body{
     text-shadow: 0px 4px 4px  rgba(0, 0, 0, 0.25);
 }
 
-.todos-os-quizzes{
+.container:not(.user) .todos-os-quizzes{
     min-width: 1051px;
-    min-height: 385px;
+    /* min-height: 385px;  AQUIIIII*/   
+    min-height: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+.container.user .todos-os-quizzes{
+    min-width: 1051px;
+    /* min-height: 385px;  AQUIIIII*/   
+    min-height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.display {
+    justify-content: space-between;
+}
+.margin{
+    margin-right: 0px;
+}   
+.container.user .todos-os-quizzes .box{
+    margin-top: 12px;
+    height: 181px;
+    width: 340px;
+    border-radius: 5px;
+    position: relative;
 }
 
 .box{
@@ -264,6 +309,7 @@ body{
     -webkit-text-stroke-color: #000;
     color: white;
     z-index: 3;
+    overflow-wrap: break-word;
 }
 
 .box img{
@@ -313,7 +359,39 @@ body{
     border-radius: 5px;
     position: relative;
 }
-
+.icones-opcoes-modificacao{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    z-index: 9999;
+    height: 87px;
+    width: 43px;
+    background-color: #EC362D;
+    border-bottom-left-radius: 11px;
+    border-top-left-radius: 11px;
+} 
+.parent {
+    pointer-events:none;        
+}
+.child {
+    pointer-events:auto;
+}
+.icones-opcoes-modificacao img{
+    height: 20px;
+    width: 20px;
+    margin-left: 3px;
+    z-index: 9999;
+    pointer-events:auto;
+}
+.icone-deletar{
+    font-size: 25px;
+    z-index: 9999;
+    pointer-events:auto;
+}
 .box11 p{
     width: 454px;
     height: 54px;
@@ -483,6 +561,10 @@ h1{
 .container{
     width: 90%;
     height: auto;
+}
+.container:not(.user){
+    width: 90%;
+    height: auto;
     margin:0 auto;
 }
 
@@ -492,8 +574,17 @@ h1{
     margin-bottom: 0;
     text-shadow: 0px 4px 4px  rgba(0, 0, 0, 0.25);
 }
+.container.user .todos-os-quizzes{
+    min-width: auto;
+    min-height: auto;
+    max-width: 100vw;
+    max-height: auto;
+    height:auto;
+    justify-content:start;
+    align-items: center;
+}
 
-.todos-os-quizzes{
+.container:not(.user) .todos-os-quizzes{
     min-width: auto;
     min-height: auto;
     max-width: 100vw;
@@ -508,6 +599,12 @@ h1{
     margin-right: 15px;
 }
 
+.container.user .todos-os-quizzes .box{    
+    margin-top: 12px;
+    margin-right: 15px;
+}
+
+
 .box img{
     width: 340px;
     height: 181px;
@@ -519,7 +616,7 @@ h1{
 /*INICIO @media375 JUAN*/
 @media (max-width: 375px){
 .box{
-    width: 90%;
+    width: 100%;
     height: 100%;
 }
     
@@ -541,6 +638,10 @@ h1{
 
 .your-quizzes-empty{
     width: 80%;
+}
+/* //roseno icone */
+.section{
+    width: 85vw;
 }
 } 
 /*FIM @media375 JUAN*/
@@ -595,6 +696,17 @@ h1{
         width: 95%;
     }
     /*Fim Tela 1 "comece pelo comeco" */
+}
+@media (max-width: 788px){
+
+    .posicao-mobile{
+        width:  340px;
+    }
+    .section{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 /* Fim @media750 Tela1 Roseno */
