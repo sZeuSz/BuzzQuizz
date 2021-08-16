@@ -777,7 +777,7 @@ h1{
     height: auto;
 }
 }
-
+/* 
 @media (max-width: 382px){
     .caixa-com-pergunta-e-opcao{
         width: 100vw;
@@ -818,5 +818,5 @@ h1{
         margin-left: 0px; 
         height: auto;
     }
-}
+} */
 /* Fim @media750 Tela1 Roseno */

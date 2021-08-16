@@ -58,7 +58,7 @@ function abrirQuizz(respostaIndividual){
     document.querySelector(".pagina-de-um-quizz").innerHTML =   `<div                                    
                                                                 class="foto-de-capa-quizz">
                                                                 <img src="${quizzImage}"><p>${quizzTitle}</p>
-                                                                acertos                          </div>`
+                                                                                          </div>`
     
     
     console.log(arrayQuestions.length)
