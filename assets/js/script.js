@@ -1,8 +1,6 @@
-//Inicio Juan
 const URL_QUIZZES = "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes"
 
 buscarQuizzes();
-
 
 function buscarQuizzes (){
     const promise = axios.get(URL_QUIZZES);
@@ -11,7 +9,6 @@ function buscarQuizzes (){
 
 function renderizarQuizzes(resposta){
     let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
-    
     if(QuizUsuario === null){
         QuizUsuario = [];
     }
@@ -33,6 +30,7 @@ function renderizarQuizzes(resposta){
     
 }
 
+
 function esconderTela(){
     document.querySelector(".home").classList.toggle("esconder");
     document.querySelector(".pagina-de-um-quizz").classList.toggle("esconder");
@@ -50,6 +48,9 @@ function urlDosIDs(elemento){
 let arrayDasRespostas = [];
 let arrayLevels;
 function abrirQuizz(respostaIndividual){
+    contadorAcertos = 0;
+    contadorErros = 0;
+    resultadoFinal = 0;
     const quizzIndividual = respostaIndividual.data;
     const quizId = quizzIndividual.id;
     const quizzImage = quizzIndividual.image;
@@ -63,9 +64,11 @@ function abrirQuizz(respostaIndividual){
     const titleLevel = arrayLevels.title;
     
     document.querySelector(".pagina-de-um-quizz").innerHTML =   `<div                                    
-                                                                class="foto-de-capa-quizz">
+                                                                class="foto-de-capa-quizz" id="${quizId}">
                                                                 <img src="${quizzImage}"><p>${quizzTitle}</p>
-                                                                </div>`
+                                                                 </div>`
+
+
     
     
     console.log(arrayQuestions.length)
@@ -151,9 +154,16 @@ function tentarAcertar(element){
 
 function quantoTaPlacar(){
     let pegardivAvo = divPai.parentNode.parentNode;
+    console.log("DIVEEE AVOOOO ->>>", pegardivAvo);
+    console.log("DIVEEE AVOOO filhos ->>>>>>", pegardivAvo.childNodes)
+
     let contadorDePerguntas = pegardivAvo.childNodes.length-1;
     console.log(contadorDePerguntas)
     if(contadorAcertos + contadorErros === contadorDePerguntas){     ///contador-1 por que?
+        for (let index = 0; index < pegardivAvo.childNodes.length; index++) {
+            console.log("so vai filhaunm ->>>> ", pegardivAvo.childNodes[index])
+        
+        }
         console.log("RESPONDEU TUDO")
         console.log('o número de acertos foi: '+contadorAcertos);
         console.log('o número de erros foi: '+contadorErros);
@@ -164,6 +174,7 @@ function quantoTaPlacar(){
         console.log("result final ->>>",resultadoFinal);
 
         setTimeout(() => {
+            console.log()
             AparecerNivel();
         }, 2000);
     }
@@ -209,15 +220,20 @@ function AparecerNivel (){
                                     </div>
                                 </div>
                                 `
-    lugarDaPergunta.innerHTML += `<button type="button" onclick="acessarQuiz(this)" id="${32}" class="button11">Acessar Quizz</button>
-                                  <p class="voltar-home11" onclick="voltarParaHome();">Voltar pra home</p>
+lugarDaPergunta.innerHTML += `<div class="alinhar-column" >
+                                    <button type="button" onclick="recomecarQuiz()" class="button11">Reiniciar Quizz</button>
+                                  <p class="voltar-home11" onclick="voltarParaHome(${2});">Voltar pra home</p>
+                                  </div>
                                  `
     document.querySelector(".pagina-de-um-quizz").scrollIntoView({block: "end", behavior: "smooth"});
 }
 /*Template <string> cin >> File.open(`dc.cpp`) 
-
-
 */
+
+function recomecarQuiz(){
+    document.querySelector(".foto-de-capa-quizz").scrollIntoView(true)
+    acessarQuiz(document.querySelector(".foto-de-capa-quizz"));
+}
 //Fim Juan
 
 
@@ -716,7 +732,7 @@ function SucessoAoPostarQuiz(sucesso){
                                 <p>${sucesso.data.title}</p>
                             </div>
                             <button type="button" onclick="acessarQuiz(this)" id="${sucesso.data.id}" class="button11">Acessar Quizz</button>
-                            <p class="voltar-home11" onclick="voltarParaHome();">Voltar pra home</p>
+                            <p class="voltar-home11" onclick="voltarParaHome(${1});">Voltar pra home</p>
                         </div>`
 
     let listaDeIdsDoUsuario = localStorage.getItem("ids");
@@ -743,14 +759,27 @@ function ErroAoPostarQuiz(erro){
 }
 
 /*Inicio tela 3 de Criar Quizz */
-function voltarParaHome(){
-    console.log("Voltando para tela inicial...")
-    let tela4 = document.querySelector(".tela4");
-    let home = document.querySelector(".home");
+function voltarParaHome(retorno){
 
-    tela4.classList.toggle("esconder"); 
-    home.classList.toggle("esconder"); 
-    window.scrollTo(0, 10);
+    if(retorno === 1){
+        console.log("Voltando para tela inicial...")
+        let tela4 = document.querySelector(".tela4");
+        let home = document.querySelector(".home");
+
+        tela4.classList.toggle("esconder"); 
+        home.classList.toggle("esconder"); 
+        window.scrollTo(0, 10);
+    }else{
+        console.log("Saindo do quizz e voltando para tela inicial...")
+        let paginaDoQuiz = document.querySelector(".pagina-de-um-quizz");
+        paginaDoQuiz.innerHTML = "";
+        console.log(paginaDoQuiz.parentElement);
+        let home = document.querySelector(".home");
+
+        paginaDoQuiz.classList.toggle("esconder"); 
+        home.classList.toggle("esconder"); 
+        window.scrollTo(0, 10);
+    }
 }
 
 /*  
