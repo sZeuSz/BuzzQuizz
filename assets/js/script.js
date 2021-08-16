@@ -11,11 +11,16 @@ function buscarQuizzes (){
 
 function renderizarQuizzes(resposta){
     let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
+    
+    if(QuizUsuario === null){
+        QuizUsuario = [];
+    }
     for (let i=0; i<resposta.data.length; i++){
         let title = resposta.data[i].title;
         let image = resposta.data[i].image;
         let id = resposta.data[i].id   
         let divDosQuizzes = document.querySelector(".container:not(.user) .todos-os-quizzes");
+
         if(QuizUsuario.map(function(quiz) {return quiz.id;}).indexOf(id) === -1){
             divDosQuizzes.innerHTML+=   
                 `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
@@ -25,6 +30,7 @@ function renderizarQuizzes(resposta){
                 </div>`
         }
     }
+    
 }
 
 function esconderTela(){
@@ -203,6 +209,9 @@ function AparecerNivel (){
                                     </div>
                                 </div>
                                 `
+    lugarDaPergunta.innerHTML += `<button type="button" onclick="acessarQuiz(this)" id="${32}" class="button11">Acessar Quizz</button>
+                                  <p class="voltar-home11" onclick="voltarParaHome();">Voltar pra home</p>
+                                 `
     document.querySelector(".pagina-de-um-quizz").scrollIntoView({block: "end", behavior: "smooth"});
 }
 /*Template <string> cin >> File.open(`dc.cpp`) 
