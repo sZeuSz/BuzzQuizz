@@ -1,6 +1,8 @@
 //Inicio Juan
 const URL_QUIZZES = "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes"
+
 buscarQuizzes();
+
 
 function buscarQuizzes (){
     const promise = axios.get(URL_QUIZZES);
@@ -13,7 +15,7 @@ function renderizarQuizzes(resposta){
     let title = resposta.data[i].title;
     let image = resposta.data[i].image;
     let id = resposta.data[i].id   
-    let divDosQuizzes = document.querySelector(".todos-os-quizzes");
+    let divDosQuizzes = document.querySelector(".container:not(.user) .todos-os-quizzes");
     divDosQuizzes.innerHTML+=   
             `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
                 <div class="background-linear"></div>
@@ -24,9 +26,9 @@ function renderizarQuizzes(resposta){
 }
 
 function esconderTela(){
-    document.querySelector(".home").classList.add("esconder");
+    document.querySelector(".home").classList.toggle("esconder");
 
-    document.querySelector(".pagina-de-um-quizz").classList.remove("esconder");
+    document.querySelector(".pagina-de-um-quizz").classList.toggle("esconder");
 }
 
 
@@ -39,16 +41,15 @@ function urlDosIDs(elemento){
 
 
 let arrayDasRespostas = [];
-
+let arrayLevels;
 function abrirQuizz(respostaIndividual){
-    
     const quizzIndividual = respostaIndividual.data;
     const quizId = quizzIndividual.id;
     const quizzImage = quizzIndividual.image;
     const quizzTitle = quizzIndividual.title;
     let arrayQuestions = quizzIndividual.questions;
     console.log(quizzIndividual.levels)
-    let arrayLevels = quizzIndividual.levels;
+    arrayLevels = quizzIndividual.levels;
     const imageLevel = arrayLevels.image;       
     const minValueLevel = arrayLevels.minValue;
     const textLevel = arrayLevels.text;  
@@ -57,11 +58,12 @@ function abrirQuizz(respostaIndividual){
     document.querySelector(".pagina-de-um-quizz").innerHTML =   `<div                                    
                                                                 class="foto-de-capa-quizz">
                                                                 <img src="${quizzImage}"><p>${quizzTitle}</p>
-                                                                </div>`
+                                                                acertos                          </div>`
     
     
-
-    for (let i=0; i<arrayQuestions.length; i++){
+    console.log(arrayQuestions.length)
+    for (let i=0; i< arrayQuestions.length; i++){
+        console.log("debugger")
         let questionTitle = arrayQuestions[i].title;
         let questionColor = arrayQuestions[i].color;
         
@@ -73,27 +75,7 @@ function abrirQuizz(respostaIndividual){
                                         <div class="div-das-respostas div-das-respostas-${i}"></div>
                                       </div>`
     //CRIAÇAO DO LEVEL
-        // if(arrayQuestions.length-1 === i){
-        //     for(i=0; i<arrayLevels.length;i++){
-        //         if (resultadoFinal === 0){
-
-        //         }
-
-        //         if(resultadoFinal >= arrayLevels[i].minValue  && resultadoFinal <= arrayLevels[i+1].minValue){
-        //             // **se ele entrar aqui eu boto pra criar a div dos levels** 
-        //             //**  **
-
-        //              console.log (resultadoFinal + '% de acerto')
-        //         }
-
-
-        //     lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
-        //                                   <div class="topo-pergunta" style="background-color: #EC362D">
-        //                                   <p>${titleLevel}</p>
-        //                                   </div>
-        //                                   </div>`
-        //     }
-        // }
+    //<template <string>>
     //FIM DA CRIAÇÃO DO LEVEL
             arrayQuestions[i].answers.sort(comparador);
 
@@ -123,13 +105,16 @@ function comparador() {
 
 let contadorAcertos = 0;
 let contadorErros = 0;
+let resultadoFinal = 0;
 let divPai;
+let levelResposta;
 function tentarAcertar(element){
     divPai = element.parentNode;
     let todasAsBoxDaquelePai = divPai.childNodes;
-    
+    element.classList.toggle("opacidade");
+    console.log(todasAsBoxDaquelePai)
     let testeScroll = document.querySelector('.div-das-respostas')
-
+    
     if (element.classList.contains("acertou")){
         contadorAcertos++
     } else{
@@ -150,28 +135,49 @@ function tentarAcertar(element){
             );
         }
         console.log(divPai.parentNode.nextElementSibling); 
-    }    
-    quantoTaPlacar();    
+    }
+    console.log(element.classList)    
+    quantoTaPlacar();
+
+    //<template String>
 }
 
 function quantoTaPlacar(){
     let pegardivAvo = divPai.parentNode.parentNode;
     let contadorDePerguntas = pegardivAvo.childNodes.length-1;
-    
-    if(contadorAcertos + contadorErros === contadorDePerguntas-1){    
+    console.log(contadorDePerguntas)
+    if(contadorAcertos + contadorErros === contadorDePerguntas){     ///contador-1 por que?
         console.log("RESPONDEU TUDO")
         console.log('o número de acertos foi: '+contadorAcertos);
-        console.log('o número de acertos foi: '+contadorErros);
-        let porcentagem = (contadorAcertos/(contadorAcertos+contadorErros)*100);
-        let resultadoFinal = Math.trunc(porcentagem);
+        console.log('o número de erros foi: '+contadorErros);
+        let porcentagem = (contadorAcertos/(contadorAcertos+contadorErros)*100); //que viaji é essa mermão
+        porcentagem = (contadorAcertos/contadorDePerguntas) * 100; //debugg
+        resultadoFinal = Math.ceil(porcentagem); //arredondar pra cima
+        console.log("poerc- >>> ", porcentagem);
+        console.log("result final ->>>",resultadoFinal);
+        AparecerNivel();
     }
 }
 
 function AparecerNivel (){
+    console.log("finalmente posso aparecer");
+    let lugarDaPergunta = document.querySelector(".pagina-de-um-quizz");
+    console.log(lugarDaPergunta)
+    lugarDaPergunta.innerHTML += "Eu sou a donde o nível vai entrar"
 
+    for(let i = 0; i < arrayLevels.length; i++){
+        console.log(arrayLevels[i]);
+        console.log(arrayLevels[i].minValue);
+        
+        //<template> pair< <int>,<int> >;
+        //->>
+        
+    }
 }
+/*Template <string> cin >> File.open(`dc.cpp`) 
 
-    
+
+*/
 //Fim Juan
 
 
@@ -197,6 +203,12 @@ let respostaIncorreta3;
 let respostaIncorretaImagem1;
 let respostaIncorretaImagem2;
 let respostaIncorretaImagem3;
+
+//
+
+//Listando Quizzes do Usuário
+let listaDeIdsDosQuizzesDoUsuario;
+let listaDeIdsSerializados;
 
 let pergunta = {
         title: "Título da pergunta 1",
@@ -657,14 +669,30 @@ function SucessoAoPostarQuiz(sucesso){
     
     tela4.innerHTML += `<div class="tela11">
                             <p class="titulo-desktop11">Seu quizz está pronto!</p>
-                            <div class="box11">
+                            <div class="box11" onclick="acessarQuiz(this)" id="${sucesso.data.id}" >
                                 <div class="background-linear11"></div>
+                                <div class="icones-opcoes-modificacao"></div>
                                 <img src="${sucesso.data.image}">
                                 <p>${sucesso.data.title}</p>
                             </div>
                             <button type="button" onclick="acessarQuiz(this)" id="${sucesso.data.id}" class="button11">Acessar Quizz</button>
                             <p class="voltar-home11" onclick="voltarParaHome();">Voltar pra home</p>
                         </div>`
+
+    let listaDeIdsDoUsuario = localStorage.getItem("ids");
+
+    if(listaDeIdsDoUsuario === null){
+        listaDeIdsDoUsuario = [{id: sucesso.data.id, key:sucesso.data.key}];
+        listaDeIdsDoUsuario = JSON.stringify(listaDeIdsDoUsuario);
+        localStorage.setItem("ids", listaDeIdsDoUsuario);
+    }
+    else{
+        listaDeIdsDoUsuario = JSON.parse(listaDeIdsDoUsuario);
+        listaDeIdsDoUsuario.push({id: sucesso.data.id, key:sucesso.data.key});
+        listaDeIdsDoUsuario = JSON.stringify(listaDeIdsDoUsuario);
+        localStorage.setItem("ids", listaDeIdsDoUsuario);
+    }
+
     window.scrollTo(0, 10);
     console.log(sucesso);
 }
@@ -683,5 +711,211 @@ function voltarParaHome(){
     window.scrollTo(0, 10);
 }
 
+/*  
+    ATENÇÃO NÃO ESQUEÇAM DE JOGAR ESSA FUNÇÃO LÁ PÁ CIMA
+    IDEIA => BuscarQuizzesDoUsuário(){
+                    (faz o negoico dos ids)
+                    chama a ota função de listar todos os outros quizzes
+                    BuscarTodosOsQuizzes();
+            }
+*/
+function SucessoAoBuscarQuizzesDoUsuario(sucesso){
+    let divDosQuizzes = document.querySelector(".container.user .todos-os-quizzes");
+    let QuizzesDoUsuario = localStorage.getItem("ids");
+    divDosQuizzes.parentNode.parentNode.classList.remove("esconder");
+    QuizzesDoUsuario = JSON.parse(QuizzesDoUsuario);
 
+    let title = sucesso.data.title;
+    let image = sucesso.data.image;
+    let id = sucesso.data.id   
+    divDosQuizzes.innerHTML+=   
+            `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
+                <div class="background-linear"></div>
+                <div class="icones-opcoes-modificacao" onclick="antiClick()">
+                    <img onclick="testeEdit()" class="icone-editar" src="assets/imagens/Vector.png" alt="Icone de inserir pergunta">
+                    <ion-icon onclick="testeDelete()" class="icone-deletar" name="trash-outline"></ion-icon>
+                </div>
+                <img src="${image}">
+                <p>${title}</p>
+            </div>`
+}
+/*testeEDITDELETE cin << debugger << template <string> << Olimpoyy << pair<int , FILE.open()> */
+function antiClick(){
+    alert("anticlicou");
+    esconderTela();
+}
+function testeEdit(){
+    alert("editando")
+    esconderTela();
+    esconderTela();
+    criarQuiz();
+}
+function testeDelete(){
+    confirm("tem certeza que deseja excluir o Quiz?");
+    esconderTela();
+    esconderTela();
+}
+
+function ErroAoBuscarQuizzesDoUsuario(erro){
+    if(erro.response.error === 400){
+        document.querySelector(".usuario").classList.toggle("esconder")
+    }
+    console.log("Sem videos do usuario, inicializando tela padron...");
+}
+function BuscarQuizzesDoUsuário(){
+    let QuizzesDoUsuario = localStorage.getItem("ids");
+    QuizzesDoUsuario = JSON.parse(QuizzesDoUsuario);
+
+    if(QuizzesDoUsuario === null){
+        ErroAoBuscarQuizzesDoUsuario({response:{error:400}});
+        console.log("numtem")
+        return;
+    }
+
+    for(let i = 0; i < QuizzesDoUsuario.length; i++){
+        console.log(QuizzesDoUsuario[i].id)
+        const promise = axios.get(URL_QUIZZES + "/" + QuizzesDoUsuario[i].id);
+        promise.then(SucessoAoBuscarQuizzesDoUsuario);
+        promise.catch(ErroAoBuscarQuizzesDoUsuario);
+    }
+}
+BuscarQuizzesDoUsuário();
 //Fim Roseno
+
+function debbugerLocalStorage(){
+
+    // cin >> while(File.open());
+
+    // template String < template static >
+    
+    console.log("teste")
+
+    //let nomes =  ["isso", "aqui", "ehdemais"];
+    //nomes = JSON.stringify(nomes);
+     /*
+    template <typename T>
+    class Array {
+        private:
+        T *ptr;
+        int size;
+        public:
+        Array(T arr[], int s);
+        void print();
+    };
+
+    template <typename T>
+        Array<T>::Array(T arr[], int s) {
+            ptr = new T[s];
+            size = s;
+            for(int i = 0; i < size; i++)
+                ptr[i] = arr[i];
+            }
+
+    template <typename T>
+    void Array<T>::print() {
+        for (int i = 0; i < size; i++)
+            cout<<" "<<*(ptr + i);
+        cout<<endl;
+    }*/
+    //localStorage.setItem("jj", nomes);
+    //localStorage.setItem("jj", '["jubileu"]');
+    let nomes = localStorage.getItem("kk");
+    let nome = "jubii"
+    console.log(nomes)
+    if(nomes === null){
+        nomes = [nome];
+        nomes = JSON.stringify(nomes);
+        localStorage.setItem("kk", nomes);
+    }
+    else{
+        nomes = JSON.parse(nomes);
+        nomes.push("jujumalvada")
+        nomes = JSON.stringify(nomes);
+        console.log(nomes)
+        localStorage.setItem("kk", nomes);
+    }
+    console.log(nomes)
+    /*
+    template <typename T>
+    class Array {
+        private:
+        T *ptr;
+        int size;
+        public:
+        Array(T arr[], int s);
+        void print();
+    };
+
+    template <typename T>
+        Array<T>::Array(T arr[], int s) {
+            ptr = new T[s];
+            size = s;
+            for(int i = 0; i < size; i++)
+                ptr[i] = arr[i];
+            }
+
+    template <typename T>
+    void Array<T>::print() {
+        for (int i = 0; i < size; i++)
+            cout<<" "<<*(ptr + i);
+        cout<<endl;
+    }*/
+}
+
+
+// debbugerLocalStorage();
+
+
+/**
+ * 
+ * Tentativa de fazer o bônus de deletar usando a sagacidade 
+ * 
+ * axios.delete(URL, 
+ *  {headers: {
+ *              Authorization: authorizationToken
+ *          }, 
+ *      data:{
+ *              source: source
+ *      }
+ *  });
+ */
+
+
+function erroAoDeletarQuiz(error){
+    alert("programei errado, disculpe")
+}
+function SucessoAoDeletarQuiz(){
+    console.log("Deletou com sucesso");
+    BuscarQuizzesDoUsuário();
+}
+
+function deletarQuiz(elemento){
+
+    confirm("Deseja mesmo deletar o Quiz?")
+
+    let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
+    let posicaoDoQuiz = QuizUsuario.map(function(quiz) {return quiz.id;}).indexOf(elemento.id);
+    console.log("dento -:>>>> ", posicaoDoQuiz)
+    console.log("dento -:>>>> ", QuizUsuario[posicaoDoQuiz].key)
+    const promise = axios.delete(URL_QUIZZES + "/" + elemento.id, {
+        headers:{
+                "Secret-Key": QuizUsuario[posicaoDoQuiz].key
+        }
+    });
+    QuizUsuario = QuizUsuario.splice(posicaoDoQuiz);
+    QuizUsuario = JSON.stringify(QuizUsuario);
+    localStorage.setItem("ids", QuizUsuario);
+    
+    promise.then(SucessoAoDeletarQuiz);
+    promise.catch(erroAoDeletarQuiz);
+}
+// deletarQuiz({id:305, key: "da7b7380-9067-4e3c-b8f7-161e5304a588"})
+/* 
+<template> debuuger > pair<pair<pair<int>,<int> bugg>
+let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
+console.log(QuizUsuario[0])
+console.log( QuizUsuario.indexOf({"id":305}))
+console.log(QuizUsuario.map(function(e) { return e.id; }).indexOf(305));
+console.log(localStorage.getItem("ids"));
+console.log(JSON.parse(localStorage.getItem("ids"))[2]);
+*/
