@@ -10,24 +10,25 @@ function buscarQuizzes (){
 }
 
 function renderizarQuizzes(resposta){
-
+    let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
     for (let i=0; i<resposta.data.length; i++){
-    let title = resposta.data[i].title;
-    let image = resposta.data[i].image;
-    let id = resposta.data[i].id   
-    let divDosQuizzes = document.querySelector(".container:not(.user) .todos-os-quizzes");
-    divDosQuizzes.innerHTML+=   
-            `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
-                <div class="background-linear"></div>
-                <img src="${image}">
-                <p>${title}</p>
-            </div>`
-    }    
+        let title = resposta.data[i].title;
+        let image = resposta.data[i].image;
+        let id = resposta.data[i].id   
+        let divDosQuizzes = document.querySelector(".container:not(.user) .todos-os-quizzes");
+        if(QuizUsuario.map(function(quiz) {return quiz.id;}).indexOf(id) === -1){
+            divDosQuizzes.innerHTML+=   
+                `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
+                    <div class="background-linear"></div>
+                    <img src="${image}">
+                    <p>${title}</p>
+                </div>`
+        }
+    }
 }
 
 function esconderTela(){
     document.querySelector(".home").classList.toggle("esconder");
-
     document.querySelector(".pagina-de-um-quizz").classList.toggle("esconder");
 }
 
@@ -155,7 +156,10 @@ function quantoTaPlacar(){
         resultadoFinal = Math.ceil(porcentagem); //arredondar pra cima
         console.log("poerc- >>> ", porcentagem);
         console.log("result final ->>>",resultadoFinal);
-        AparecerNivel();
+
+        setTimeout(() => {
+            AparecerNivel();
+        }, 2000);
     }
 }
 
@@ -199,6 +203,7 @@ function AparecerNivel (){
                                     </div>
                                 </div>
                                 `
+    document.querySelector(".pagina-de-um-quizz").scrollIntoView({block: "end", behavior: "smooth"});
 }
 /*Template <string> cin >> File.open(`dc.cpp`) 
 
@@ -725,7 +730,9 @@ function SucessoAoPostarQuiz(sucesso){
 function ErroAoPostarQuiz(erro){
     console.log(erro.response.status);
     alert("deu bug no servidor, programei errado")
+    window.location.reload();
 }
+
 /*Inicio tela 3 de Criar Quizz */
 function voltarParaHome(){
     console.log("Voltando para tela inicial...")
