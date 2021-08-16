@@ -1,8 +1,6 @@
-//Inicio Juan
 const URL_QUIZZES = "https://mock-api.bootcamp.respondeai.com.br/api/v3/buzzquizz/quizzes"
 
 buscarQuizzes();
-
 
 function buscarQuizzes (){
     const promise = axios.get(URL_QUIZZES);
@@ -10,24 +8,29 @@ function buscarQuizzes (){
 }
 
 function renderizarQuizzes(resposta){
-
+    let QuizUsuario = JSON.parse(localStorage.getItem("ids"));
+    if(QuizUsuario === null){
+        QuizUsuario = [];
+    }
     for (let i=0; i<resposta.data.length; i++){
-    let title = resposta.data[i].title;
-    let image = resposta.data[i].image;
-    let id = resposta.data[i].id   
-    let divDosQuizzes = document.querySelector(".container:not(.user) .todos-os-quizzes");
-    divDosQuizzes.innerHTML+=   
-            `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
-                <div class="background-linear"></div>
-                <img src="${image}">
-                <p>${title}</p>
-            </div>`
-    }    
+        let title = resposta.data[i].title;
+        let image = resposta.data[i].image;
+        let id = resposta.data[i].id   
+        let divDosQuizzes = document.querySelector(".container:not(.user) .todos-os-quizzes");
+        if(QuizUsuario.map(function(quiz) {return quiz.id;}).indexOf(id) === -1){
+            divDosQuizzes.innerHTML+=   
+                `<div onclick="urlDosIDs(this),esconderTela()" class="box" id="${id}">
+                    <div class="background-linear"></div>
+                    <img src="${image}">
+                    <p>${title}</p>
+                </div>`
+        }
+    }
 }
+
 
 function esconderTela(){
     document.querySelector(".home").classList.toggle("esconder");
-
     document.querySelector(".pagina-de-um-quizz").classList.toggle("esconder");
 }
 
@@ -58,7 +61,9 @@ function abrirQuizz(respostaIndividual){
     document.querySelector(".pagina-de-um-quizz").innerHTML =   `<div                                    
                                                                 class="foto-de-capa-quizz">
                                                                 <img src="${quizzImage}"><p>${quizzTitle}</p>
-                                                                                          </div>`
+                                                                 </div>`
+
+
     
     
     console.log(arrayQuestions.length)
@@ -123,11 +128,11 @@ function tentarAcertar(element){
     
     for(i=0; i<todasAsBoxDaquelePai.length; i++){
         if(todasAsBoxDaquelePai[i].classList.contains("acertou")){
-            todasAsBoxDaquelePai[i].classList.add("resposta-correta");
+            todasAsBoxDaquelePai[i].classList.add("correta");
             contadorAcertos;
         }
         if(todasAsBoxDaquelePai[i].classList.contains("errou")){
-                todasAsBoxDaquelePai[i].classList.add("resposta-errada");    
+                todasAsBoxDaquelePai[i].classList.add("errada");    
         }
         if(divPai.parentNode.nextElementSibling !== null){
             divPai.parentNode.nextElementSibling.scrollIntoView(
@@ -155,24 +160,54 @@ function quantoTaPlacar(){
         resultadoFinal = Math.ceil(porcentagem); //arredondar pra cima
         console.log("poerc- >>> ", porcentagem);
         console.log("result final ->>>",resultadoFinal);
-        AparecerNivel();
+
+        setTimeout(() => {
+            AparecerNivel();
+        }, 2000);
     }
 }
 
 function AparecerNivel (){
     console.log("finalmente posso aparecer");
     let lugarDaPergunta = document.querySelector(".pagina-de-um-quizz");
-    console.log(lugarDaPergunta)
-    lugarDaPergunta.innerHTML += "Eu sou a donde o nível vai entrar"
-
+    console.log(lugarDaPergunta)    
+    /*
+    lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
+                                    <div class="topo-porcentagem-nivel" style="background-color: #000000"" >
+                                    <p>88% de acerto: Você é praticamente um aluno de Hogwarts!</p>
+                                    </div>
+                                    <div class="div-do-nivel">
+                                            <img src="https://www.clubeparacachorros.com.br/wp-content/uploads/2018/07/cachorro-fofo-beagle-curioso.jpg" alt="imagem-do-nivel">
+                                            <span class="descricao-do-nivel">Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</span>
+                                    </div>
+                                </div>
+                                `
+    */
+    console.log(resultadoFinal);
+    console.log(typeof(resultadoFinal));
+    let melhorNivel = resultadoFinal;
+    let posicaoCerta = 0;
     for(let i = 0; i < arrayLevels.length; i++){
         console.log(arrayLevels[i]);
         console.log(arrayLevels[i].minValue);
-        
-        //<template> pair< <int>,<int> >;
-        //->>
-        
+        if(melhorNivel >= arrayLevels[i].minValue){
+            console.log(melhorNivel, "aquiiii")
+            // melhorNivel = arrayLevels[i].minValue;
+            posicaoCerta = i;
+        }
     }
+    console.log(melhorNivel, posicaoCerta);
+    lugarDaPergunta.innerHTML += `<div class="caixa-com-pergunta-e-opcao">
+                                    <div class="topo-porcentagem-nivel" style="background-color: #000000"" >
+                                    <p>${resultadoFinal}% de acerto: ${arrayLevels[posicaoCerta].title}</p>
+                                    </div>
+                                    <div class="div-do-nivel">
+                                            <img src="${arrayLevels[posicaoCerta].image}" alt="imagem-do-nivel">
+                                            <span class="descricao-do-nivel">${arrayLevels[posicaoCerta].text}</span>
+                                    </div>
+                                </div>
+                                `
+    document.querySelector(".pagina-de-um-quizz").scrollIntoView({block: "end", behavior: "smooth"});
 }
 /*Template <string> cin >> File.open(`dc.cpp`) 
 
@@ -699,7 +734,9 @@ function SucessoAoPostarQuiz(sucesso){
 function ErroAoPostarQuiz(erro){
     console.log(erro.response.status);
     alert("deu bug no servidor, programei errado")
+    window.location.reload();
 }
+
 /*Inicio tela 3 de Criar Quizz */
 function voltarParaHome(){
     console.log("Voltando para tela inicial...")
