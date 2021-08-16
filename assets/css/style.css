@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400 &display=swap');
 
 
-* {
-    font-family: Roboto;
+*{
+    font-family: Roboto, sans-serif;
     box-sizing: border-box;
 }
 
 /* Inicio Roseno */
 header {
+    
     width: 100vw;
     position: fixed;
     top: 0;
@@ -22,7 +23,7 @@ header {
 }
 
 h1 {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 37px;
     font-weight: 700;
     color: #FFFFFF;
@@ -98,6 +99,7 @@ h1 {
     margin-top: 20px;
 }
 .pergunta {
+    font-family: Roboto, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -132,6 +134,7 @@ input::placeholder {
 }
 
 .button {
+    font-family: Roboto, sans-serif;
     height: 54px;
     width: 65%;
     border-radius: 15px;
@@ -151,6 +154,7 @@ input::placeholder {
     cursor: pointer;
 }
 .butaun {
+    font-family: Roboto, sans-serif;
     height: 54px;
     width: 65%;
     border-radius: 15px;
@@ -184,6 +188,7 @@ input::placeholder {
 
 
 .title-section {
+    font-family: Roboto, sans-serif;
     font-size: 23px;
     color: #000000;
     margin: 0 0 18px;
@@ -197,6 +202,7 @@ body {
 /* Inicio tela 2 Criar Quiz */
 
 .question {
+    font-family: Roboto, sans-serif;
     font-size: 20px;
     margin: 27px 0 0 20px;
     color: #000000;
@@ -209,6 +215,7 @@ body {
 }
 /*Exemplos Static -- dont mexa*/
 .alinha {
+    font-family: Roboto, sans-serif;
     height: 74px;
     display: flex;
     justify-content: space-between;
@@ -219,6 +226,7 @@ body {
     color: black;
 }
 .exemplo {
+    font-family: Roboto, sans-serif;
     font-size: 20px;
     margin-left: 18px;
     color: #000000;
@@ -298,6 +306,7 @@ body {
 }
 
 .box p {
+    font-family: Roboto, sans-serif;
     width: 301px;
     height: 54px;
     font-size: 19px;
@@ -342,6 +351,7 @@ body {
 }
 
 .titulo-desktop11 {
+    font-family: Roboto, sans-serif;
     margin-top: 132px;
     margin-bottom: 46px;
     font-size: 23px;
@@ -391,11 +401,13 @@ body {
     pointer-events: auto;
 }
 .icone-deletar {
+    font-family: Roboto, sans-serif;
     font-size: 25px;
     z-index: 9999;
     pointer-events: auto;
 }
 .box11 p {
+    font-family: Roboto, sans-serif;
     width: 454px;
     height: 54px;
     font-size: 19px;
@@ -428,6 +440,7 @@ body {
 }
 
 .button11 {
+    font-family: Roboto, sans-serif;
     height: 44px;
     width: 220px;
     border-radius: 15px;
@@ -441,6 +454,7 @@ body {
 }
 
 .voltar-home11 {
+    font-family: Roboto, sans-serif;
     height: 44px;
     width: 219px;
     color: #818181;
@@ -466,13 +480,14 @@ body {
 }
 
 .foto-de-capa-quizz p {
+    font-family: Roboto, sans-serif;
     position: absolute;
     width: 80vw;
     text-align: center;
     top: 159px;
     margin-left: 50%;
     transform: translateX(-50%);
-    font-family: Roboto;
+    
     font-style: normal;
     font-size: 39px;
     color: white;
@@ -509,7 +524,8 @@ body {
 
 .topo-pergunta p,
 .topo-porcentagem-nivel p {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
+
     font-style: normal;
     font-weight: bold;
     font-size: 23px;
@@ -528,6 +544,7 @@ body {
 } */
 
 .div-das-respostas {
+    font-family: Roboto, sans-serif;
     margin-left: auto;
     margin-right: auto;
     /* margin-inline: auto; */
@@ -576,6 +593,7 @@ body {
     margin-top: 10px;
 }
 .div-do-nivel .descricao-do-nivel {
+    font-family: Roboto, sans-serif;
     /* background-color: red; */
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -596,7 +614,8 @@ body {
 }
 
 .box-das-respostas p {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
+    
     font-weight: 700;
     width: 329px;
     font-size: 20px;
